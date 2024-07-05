@@ -13,18 +13,26 @@ import java.util.List;
 public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user")
     private int idUser;
 
+    @Column(name = "nom")
     private String nom;
 
+    @Column(name = "prenom")
     private String prenom;
+
+    @Column(name = "adresse")
     private String adresse;
 
+    @Column(name = "email", unique = true)
     private String email;
 
-
+    @Column(name = "password")
     private String password;
+
+    @Enumerated(EnumType.STRING)
     private RoleEnum role;
-    @OneToMany(mappedBy = "utilisateur")
-    private List<Emprunt> emprunt;
-}
+
+    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+    private List<Emprunt> emprunt;}
