@@ -2,7 +2,7 @@ package com.example.demo.web;
 
 
 import com.example.demo.entities.Utilisateur;
-import com.example.demo.services.IUtilisateurService;
+import com.example.demo.services.Interface.IUtilisateurService;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Data
 @RestController
@@ -63,19 +62,13 @@ public class UserController {
 
     @PostMapping("/update_user/{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") Integer id,@Validated @RequestBody Utilisateur user){
-        Utilisateur existant = us.rechercherUser(id);
-        if(existant != null) {
-            existant.setNom(user.getNom());
-            existant.setPrenom(user.getPrenom());
-            existant.setAdresse(user.getAdresse());
-            existant.setEmail(user.getEmail());
-            existant.setPassword(user.getPassword());
-            existant.setRole(user.getRole());
-            us.modifierUser(existant);
+        try{
+            us.modifierUser(id,user);
             return ResponseEntity.ok("Updated successfully");
         }
-        else
+        catch (Exception e) {
             return ResponseEntity.notFound().build();
+        }
     }
     @PostMapping("/delete_user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id){
