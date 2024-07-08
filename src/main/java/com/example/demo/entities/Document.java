@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +18,8 @@ public class Document {
     private String titre;
 
     private String auteur;
-    private Date date_ecriture;
-
+    private LocalDate date_ecriture;
+    private int stock;
     private Boolean disponible;
     @OneToMany(mappedBy = "document")
     private List<Emprunt> emprunt;

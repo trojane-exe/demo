@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -18,5 +19,5 @@ public class Transaction {
     private Utilisateur utilisateur;
     @ManyToOne
     private Emprunt emprunt;
-    private Date date_transaction;
+    private LocalDate date_transaction;
 }

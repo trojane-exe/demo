@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data @AllArgsConstructor @NoArgsConstructor
@@ -18,5 +19,5 @@ public class Reservation {
     @ManyToOne
     private Utilisateur utilisateur;
 
-    private Date date_reservation;
+    private LocalDate date_reservation;
 }

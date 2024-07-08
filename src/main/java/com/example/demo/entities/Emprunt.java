@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data @AllArgsConstructor @NoArgsConstructor
@@ -17,8 +18,8 @@ public class Emprunt {
     private Utilisateur utilisateur;
     @ManyToOne
     private Document document;
-    private Date date_debut;
-    private Date date_retour_prevue;
-    private Date date_retour;
+    private LocalDate date_debut;
+    private LocalDate date_retour_prevue;
+    private LocalDate date_retour;
     private String status;
 }
