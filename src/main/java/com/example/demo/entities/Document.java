@@ -19,7 +19,7 @@ public class Document {
     private String auteur;
     private Date date_ecriture;
 
-    private boolean disponible;
+    private Boolean disponible;
     @OneToMany(mappedBy = "document")
     private List<Emprunt> emprunt;
 

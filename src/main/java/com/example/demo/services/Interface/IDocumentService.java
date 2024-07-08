@@ -10,4 +10,5 @@ public interface IDocumentService {
     public void supprimerDocument(Integer id);
     public Document rechercherDocument(Integer id);
     public List<Document> listDocument();
+    public void deleteAll();
 }

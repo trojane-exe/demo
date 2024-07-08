@@ -31,7 +31,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(/*/users_home/*/"/{id}")
     public ResponseEntity<Utilisateur> singleUser(@PathVariable("id") Integer id) {
         Utilisateur user = us.rechercherUser(id);
         if (user != null) {

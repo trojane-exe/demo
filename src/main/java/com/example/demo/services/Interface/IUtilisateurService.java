@@ -10,5 +10,6 @@ public interface IUtilisateurService {
     public void supprimerUser(Integer id);
     public Utilisateur rechercherUser(Integer id); //rechercher un seul utilisteur
     public List<Utilisateur> listUsers();
+    public void deleteAll();
 
 }

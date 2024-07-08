@@ -22,6 +22,10 @@ public class IUtilisateurImpl implements IUtilisateurService {
         this.ur = userRep;
     }
 
+    @Override
+    public void deleteAll(){
+        ur.deleteAll();
+    }
 
     @Override
     public void ajouterUser(Utilisateur utilisateur){
@@ -31,14 +35,27 @@ public class IUtilisateurImpl implements IUtilisateurService {
     @Override
     public void modifierUser(int id ,Utilisateur utilisateur) {
         Utilisateur existant = ur.findById(id).orElseThrow(()->new EntityNotFoundException("user not found"));
-        existant.setNom(utilisateur.getNom());
-        existant.setPrenom(utilisateur.getPrenom());
-        existant.setAdresse(utilisateur.getAdresse());
-        existant.setEmail(utilisateur.getEmail());
-        existant.setPassword(utilisateur.getPassword());
-        existant.setRole(utilisateur.getRole());
-
-        ur.save(existant);
+        if(existant != null) {
+            if (utilisateur.getNom() != null) {
+                existant.setNom(utilisateur.getNom());
+            }
+            if (utilisateur.getPrenom() != null) {
+                existant.setPrenom(utilisateur.getPrenom());
+            }
+            if (utilisateur.getAdresse() != null) {
+                existant.setAdresse(utilisateur.getAdresse());
+            }
+            if (utilisateur.getEmail() != null) {
+                existant.setEmail(utilisateur.getEmail());
+            }
+            if (utilisateur.getPassword() != null) {
+                existant.setPassword(utilisateur.getPassword());
+            }
+            if (utilisateur.getRole() != null) {
+                existant.setRole(utilisateur.getRole());
+            }
+            ur.save(existant);
+        }
 
     }
 
@@ -51,10 +68,7 @@ public class IUtilisateurImpl implements IUtilisateurService {
     @Override
     public Utilisateur rechercherUser(Integer id) {
         Optional<Utilisateur> userInfo = ur.findById(id);
-        if (userInfo.isPresent()) {
-            return userInfo.get();
-        }
-        return null;
+        return userInfo.orElse(null);
     }
 
     @Override
