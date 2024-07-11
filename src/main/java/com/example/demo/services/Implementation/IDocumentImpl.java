@@ -46,7 +46,7 @@ public class IDocumentImpl implements IDocumentService {
             if (document.getDate_ecriture() != null) {
                 doc.setDate_ecriture(document.getDate_ecriture());
             }
-            if(document.getStock()!=null){
+            if(document.getStock()!=null || document.getStock()<0){
                 doc.setStock(document.getStock());
             }
             dr.save(doc);

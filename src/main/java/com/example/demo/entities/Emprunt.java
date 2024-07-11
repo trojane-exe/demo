@@ -15,13 +15,12 @@ public class Emprunt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEmp;
     @ManyToOne
-    private Utilisateur utilisateur;
-    @ManyToOne
-    private Document document;
+    private Reservation reservation;
     private LocalDate date_debut;
     private LocalDate date_retour_prevue;
     private LocalDate date_retour;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
     @OneToOne
     @Transient
     private Transaction transaction;

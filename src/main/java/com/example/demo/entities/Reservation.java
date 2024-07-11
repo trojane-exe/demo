@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity
@@ -19,5 +20,7 @@ public class Reservation {
     @ManyToOne
     private Utilisateur utilisateur;
 
+    @OneToMany(mappedBy = "reservation" , cascade = CascadeType.ALL)
+    private List<Emprunt> emprunts;
     private LocalDate date_reservation;
 }

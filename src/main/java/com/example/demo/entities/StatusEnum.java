@@ -1,5 +1,10 @@
 package com.example.demo.entities;
 
-public class StatusEnum {
+public enum StatusEnum{
+    approuvé,
+    retourné,
+    retardé,
+    annulé,
+
 
 }

@@ -20,9 +20,8 @@ public class Document {
 
     private String auteur;
     private LocalDate date_ecriture;
+    @Column(columnDefinition = "int default 0")
     private Integer stock;
-    @OneToMany(mappedBy = "document")
-    private List<Emprunt> emprunt;
     @OneToMany(mappedBy = "document" , cascade = CascadeType.ALL , orphanRemoval = true)
     private List<Reservation> reservations;
 

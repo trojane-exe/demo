@@ -35,9 +35,6 @@ public class Utilisateur {
     private RoleEnum role;
 
     @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
-    private List<Emprunt> emprunt;
-
-    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
     private List<Transaction> transactions;
 
     @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
