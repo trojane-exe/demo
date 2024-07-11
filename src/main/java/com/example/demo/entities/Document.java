@@ -20,9 +20,10 @@ public class Document {
 
     private String auteur;
     private LocalDate date_ecriture;
-    private int stock;
-    private Boolean disponible;
+    private Integer stock;
     @OneToMany(mappedBy = "document")
     private List<Emprunt> emprunt;
+    @OneToMany(mappedBy = "document" , cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<Reservation> reservations;
 
 }

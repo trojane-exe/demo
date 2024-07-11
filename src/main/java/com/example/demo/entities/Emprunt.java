@@ -22,4 +22,7 @@ public class Emprunt {
     private LocalDate date_retour_prevue;
     private LocalDate date_retour;
     private String status;
+    @OneToOne
+    @Transient
+    private Transaction transaction;
 }

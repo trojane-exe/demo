@@ -17,7 +17,7 @@ public class Transaction {
     private Integer idTransaction;
     @ManyToOne
     private Utilisateur utilisateur;
-    @ManyToOne
+    @OneToOne
     private Emprunt emprunt;
     private LocalDate date_transaction;
 }

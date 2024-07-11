@@ -35,7 +35,7 @@ public class IDocumentImpl implements IDocumentService {
 
     @Override
     public void modifierDocument(int id , Document document) {
-        Document doc = dr.findById(id).orElseThrow(()->new EntityNotFoundException("Document not found"));
+        Document doc = dr.findById(id).orElse(null);
         if(doc!=null){
             if (document.getTitre() != null) {
                 doc.setTitre(document.getTitre());
@@ -43,11 +43,11 @@ public class IDocumentImpl implements IDocumentService {
             if (document.getAuteur() != null) {
                 doc.setAuteur(document.getAuteur());
             }
-            if (document.getDisponible() != null) {
-                doc.setDisponible(document.getDisponible());
-            }
             if (document.getDate_ecriture() != null) {
                 doc.setDate_ecriture(document.getDate_ecriture());
+            }
+            if(document.getStock()!=null){
+                doc.setStock(document.getStock());
             }
             dr.save(doc);
         }

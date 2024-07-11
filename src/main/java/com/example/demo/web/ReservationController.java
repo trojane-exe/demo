@@ -1,14 +1,11 @@
 package com.example.demo.web;
 
 import com.example.demo.dto.ReservationDTO;
-import com.example.demo.entities.Reservation;
 import com.example.demo.services.Interface.IReservationService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,12 +44,12 @@ public class ReservationController {
 
     @PostMapping("/add_reservation")
     public ResponseEntity<?> addReservation(@Validated @RequestBody ReservationDTO dto){
-        try{
-            rs.ajouterReservation(dto);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Reservation saved");
+        String resultat = rs.ajouterReservation(dto);
+        if (resultat==null){
+            return ResponseEntity.ok("Reservation added successfully");
         }
-        catch (Exception e){
-            return ResponseEntity.notFound().build();
+        else{
+            return ResponseEntity.badRequest().body(resultat) ;
         }
     }
     @PostMapping("/update_res/{id}")

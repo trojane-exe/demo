@@ -14,6 +14,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,10 +53,24 @@ public class IReservationImpl implements IReservationService {
 
 
     @Override
-    public void ajouterReservation(ReservationDTO dto) {
-        Reservation res = entity(dto);
-        rr.save(res);
+    public String ajouterReservation(ReservationDTO dto) {
+        Document doc = dr.findById(dto.getIdDoc()).orElse(null);//.orElseThrow(() -> new RuntimeException("not found"));
+        Utilisateur user = ur.findById(dto.getIdUser()).orElse(null);
+        if (doc == null || user == null) {
+            return "User or document are invalid";
+        } else {
+            if (doc.getStock() == 0) {
+                return "Document is out of stock";
+            } else {
+                Reservation res = entity(dto);
+                rr.save(res);
+                doc.setStock(doc.getStock() - 1);
+                dr.save(doc);
+            }
 
+        }
+
+        return null;
     }
 
 
