@@ -14,7 +14,7 @@ import java.util.Date;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idTransaction;
+    private Integer idTransaction;
     @ManyToOne
     private Utilisateur utilisateur;
     @ManyToOne

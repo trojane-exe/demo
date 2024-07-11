@@ -13,7 +13,7 @@ import java.util.Date;
 public class Emprunt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEmp;
+    private Integer idEmp;
     @ManyToOne
     private Utilisateur utilisateur;
     @ManyToOne

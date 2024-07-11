@@ -13,7 +13,7 @@ import java.util.Date;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idReservation;
+    private Integer idReservation;
     @ManyToOne
     private Document document;
     @ManyToOne

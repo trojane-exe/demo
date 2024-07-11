@@ -11,10 +11,11 @@ import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity
+
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idDoc;
+    private Integer idDoc;
     private String titre;
 
     private String auteur;
