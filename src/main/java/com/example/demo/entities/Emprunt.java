@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity
@@ -21,7 +22,6 @@ public class Emprunt {
     private LocalDate date_retour;
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
-    @OneToOne
-    @Transient
-    private Transaction transaction;
+    @OneToMany(mappedBy ="emprunt",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaction> transaction;
 }

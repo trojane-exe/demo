@@ -64,7 +64,7 @@ public class DocumentController {
     public ResponseEntity<?> deleteDoc(@PathVariable("id") Integer id){
             String resultats = ds.supprimerDocument(id);
             if(resultats==null){
-            return ResponseEntity.ok(resultats);
+            return ResponseEntity.ok("deleted successfully");
         }
         else{
             return ResponseEntity.badRequest().body("error while deleting");
