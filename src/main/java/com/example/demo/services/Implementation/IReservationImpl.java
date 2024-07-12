@@ -134,6 +134,9 @@ public class IReservationImpl implements IReservationService {
             else{
                 dto.setIdDoc(null);
             }
+            if(reservation.getIsActive()!=null){
+                dto.setIsActive(reservation.getIsActive());
+            }
 
             return dto;
         }
@@ -166,6 +169,9 @@ public class IReservationImpl implements IReservationService {
                 dtos.setDate_reservation(reservation.getDate_reservation());
             } else {
                 dtos.setDate_reservation(null); // or any default value you prefer
+            }
+            if(reservation.getIsActive()!=null){
+                dtos.setIsActive(reservation.getIsActive());
             }
             dto.add(dtos);
         }
