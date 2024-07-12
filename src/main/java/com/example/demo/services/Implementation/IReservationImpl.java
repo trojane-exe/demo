@@ -14,7 +14,6 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +57,8 @@ public class IReservationImpl implements IReservationService {
         Utilisateur user = ur.findById(dto.getIdUser()).orElse(null);
         if (doc == null || user == null) {
             return "User or document are invalid";
-        } else {
+        }
+        else {
             if (doc.getStock() == 0) {
                 return "Document is out of stock";
             } else {
@@ -67,17 +67,18 @@ public class IReservationImpl implements IReservationService {
                 doc.setStock(doc.getStock() - 1);
                 dr.save(doc);
             }
+            return null;
 
         }
 
-        return null;
+
     }
 
 
     @Override
-    public void modifierReservation(int id, ReservationDTO dto) {
+    public String modifierReservation(int id, ReservationDTO dto) {
         Reservation oldRes = rr.findById(id).orElseThrow(() -> new EntityNotFoundException("not found"));
-        if (oldRes != null) {
+        if (oldRes != null && oldRes.getIsActive()) {
 
             if(dto.getIdUser()!=null){
                 Utilisateur user = ur.findById(dto.getIdUser()).orElseThrow(()->new RuntimeException("not found"));
@@ -92,16 +93,21 @@ public class IReservationImpl implements IReservationService {
             }
             rr.save(oldRes);
         }
+        else{
+            return "this reservation is already canceled ";
+        }
+        return null;
     }
 
     @Override
     public String supprimerReservation(int id) {
-        Reservation res = rr.findById(id).orElseThrow(()->new RuntimeException("not found"));
+        Reservation res = rr.findById(id).orElse(null);
+
         if(res!=null){
             rr.deleteById(id);
         }
         else{
-            return "error occured";
+            return "error occured while deleting";
         }
         return null;
     }

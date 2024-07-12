@@ -54,13 +54,14 @@ public class ReservationController {
     }
     @PostMapping("/update_res/{id}")
     public ResponseEntity<?>updateReservation(@PathVariable("id") Integer id,@Validated @RequestBody ReservationDTO dto){
-        try{
-            rs.modifierReservation(id,dto);
+
+        String resultat = rs.modifierReservation(id,dto);
+    if(resultat==null){
             return ResponseEntity.ok("Updated successfully");
 
         }
-        catch (Exception e){
-            return ResponseEntity.notFound().build();
+        else{
+            return ResponseEntity.badRequest().body(resultat);
         }
     }
     @PostMapping("/delete_res/{id}")

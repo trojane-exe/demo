@@ -62,12 +62,12 @@ public class DocumentController {
     }
     @PostMapping("/delete_doc/{id}")
     public ResponseEntity<?> deleteDoc(@PathVariable("id") Integer id){
-        try {
-            ds.supprimerDocument(id);
-            return ResponseEntity.ok("Deleted successfully");
+            String resultats = ds.supprimerDocument(id);
+            if(resultats==null){
+            return ResponseEntity.ok(resultats);
         }
-        catch (Exception e){
-            return ResponseEntity.notFound().build();
+        else{
+            return ResponseEntity.badRequest().body("error while deleting");
         }
     }
 }

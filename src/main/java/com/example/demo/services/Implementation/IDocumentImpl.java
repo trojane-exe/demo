@@ -3,7 +3,6 @@ package com.example.demo.services.Implementation;
 import com.example.demo.entities.Document;
 import com.example.demo.repository.DocumentRepository;
 import com.example.demo.services.Interface.IDocumentService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,12 @@ public class IDocumentImpl implements IDocumentService {
     }
 
     @Override
-    public void ajouterDocument(Document document) {
+    public String ajouterDocument(Document document) {
+        if(document.getStock()<0){
+            return "stock cant be under 0";
+        }
         dr.save(document);
+        return null;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class IDocumentImpl implements IDocumentService {
             if (document.getDate_ecriture() != null) {
                 doc.setDate_ecriture(document.getDate_ecriture());
             }
-            if(document.getStock()!=null || document.getStock()<0){
+            if(document.getStock()!=null && document.getStock()<0){
                 doc.setStock(document.getStock());
             }
             dr.save(doc);
@@ -55,8 +58,9 @@ public class IDocumentImpl implements IDocumentService {
     }
 
     @Override
-    public void supprimerDocument(Integer id) {
-        dr.deleteById(id);
+    public String supprimerDocument(Integer id){
+            dr.deleteById(id);
+            return null;
     }
 
     @Override

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 import java.util.List;
 
 @Data @AllArgsConstructor @NoArgsConstructor
@@ -19,8 +19,9 @@ public class Reservation {
     private Document document;
     @ManyToOne
     private Utilisateur utilisateur;
-
-    @OneToMany(mappedBy = "reservation" , cascade = CascadeType.ALL)
+    @Column(columnDefinition = "boolean default true")
+    private Boolean isActive = true;
+    @OneToMany(mappedBy = "reservation" , cascade = CascadeType.ALL ,orphanRemoval = true)
     private List<Emprunt> emprunts;
-    private LocalDate date_reservation;
+    private LocalDate date_reservation = LocalDate.now();
 }

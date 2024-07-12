@@ -16,7 +16,7 @@ public class Emprunt {
     private Integer idEmp;
     @ManyToOne
     private Reservation reservation;
-    private LocalDate date_debut;
+    private LocalDate date_debut = LocalDate.now();
     private LocalDate date_retour_prevue;
     private LocalDate date_retour;
     @Enumerated(EnumType.STRING)

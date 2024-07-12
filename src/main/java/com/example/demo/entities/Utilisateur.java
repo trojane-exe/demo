@@ -34,9 +34,9 @@ public class Utilisateur {
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
-    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL , orphanRemoval = true)
     private List<Transaction> transactions;
 
-    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL , orphanRemoval = true)
     private List<Reservation> reservations;
 }
