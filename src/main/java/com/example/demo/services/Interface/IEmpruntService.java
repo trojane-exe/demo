@@ -10,4 +10,5 @@ public interface IEmpruntService {
     public String supprimerEmprunt(int id);
     public EmpruntDTO rechercherEmprunt(int id);
     public List<EmpruntDTO> listerEmprunt();
+    public void retard();
 }
