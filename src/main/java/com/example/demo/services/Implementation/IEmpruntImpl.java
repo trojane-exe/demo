@@ -39,8 +39,14 @@ public class IEmpruntImpl implements IEmpruntService {
         if(dto.getDate_debut()!=null) {
             emprunt.setDate_debut(dto.getDate_debut());
         }
+        else{
+            emprunt.setDate_debut(LocalDate.now());
+        }
         if(dto.getDate_retour_prevue()!=null) {
             emprunt.setDate_retour_prevue(dto.getDate_retour_prevue());
+        }
+        else{
+            emprunt.setDate_retour_prevue(LocalDate.now().plusDays(7));
         }
         if(dto.getStatus()!=null) {
             emprunt.setStatus(StatusEnum.valueOf(dto.getStatus()));
@@ -61,20 +67,25 @@ public class IEmpruntImpl implements IEmpruntService {
 
             emprunt.setStatus(StatusEnum.approuvé);
             if (emprunt.getDate_debut() != null) {
-                if(empruntDTO.getDate_debut().isBefore(LocalDate.now())){
+                if (emprunt.getDate_debut().isBefore(LocalDate.now())) {
                     return "invalid start date";
                 }
-                else {
-                    emprunt.setDate_debut(empruntDTO.getDate_debut());
-                }
-            }
-            else {
-                emprunt.setDate_debut(LocalDate.now());
             }
             if (empruntDTO.getDate_retour_prevue() == null) {
-                return "the return date is required";
+                //emprunt.setDate_retour_prevue(emprunt.getDate_retour_prevue());
+                emprunt.setDate_retour(null);
+                emprunt.setReservation(reservation);
+                er.save(emprunt);
+                reservation.setIsActive(false);
+                Transaction transaction = new Transaction();
+                transaction.setEmprunt(emprunt);
+                transaction.setUtilisateur(reservation.getUtilisateur());
+                transaction.setDate_transaction(emprunt.getDate_debut());
+                tr.save(transaction);
+                return "the return date isn't specified , by default you have 7 days to return the document \n your emprunt is added successfully";
+
             }
-            else if (empruntDTO.getDate_debut().isAfter(empruntDTO.getDate_retour_prevue())) {
+            else if (emprunt.getDate_debut().isAfter(emprunt.getDate_retour_prevue())) {
                 return "the date de debut cant be after the return date";
             }
 
