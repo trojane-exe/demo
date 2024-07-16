@@ -23,6 +23,10 @@ import java.util.Optional;
 @Transactional
 
 public class IReservationImpl implements IReservationService {
+    //public static Integer id;
+    /* after adding the security stuff to the project I won't be needing a user id to make the reservation i will be retrieving that if at the start of the
+    app and make it public static to be accessible everywhere and then use it to add new reservation*/
+
     @Autowired
     private final ReservationRepository rr;
     @Autowired

@@ -1,7 +1,6 @@
 package com.example.demo.services.Implementation;
 
 import com.example.demo.dto.EmpruntDTO;
-import com.example.demo.dto.ReservationDTO;
 import com.example.demo.entities.*;
 import com.example.demo.repository.DocumentRepository;
 import com.example.demo.repository.EmpruntRepository;
@@ -12,12 +11,13 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @Transactional
 @Data
@@ -185,6 +185,18 @@ public class IEmpruntImpl implements IEmpruntService {
         }
     }
 
+    @Override
+    public List<EmpruntDTO> findEmpruntsByUserId(Integer id) {
+
+        List<Emprunt> emprunts = er.findEmpruntsByUserId(id);
+        List<EmpruntDTO> dto = new ArrayList<>();
+        for(Emprunt emprunt:emprunts){
+            EmpruntDTO dtos = toDto(emprunt);
+            dto.add(dtos);
+        }
+        return dto;
+
+    }
 
 
     @Override
@@ -236,7 +248,7 @@ public class IEmpruntImpl implements IEmpruntService {
     public String supprimerEmprunt(int id) {
         Emprunt emprunt = er.findById(id).orElse(null);
         if(emprunt==null){
-            return "error : the emrpunt can't be found";
+            return "error : the emprunt can't be found";
         }
         else {
             er.deleteById(id);
@@ -246,6 +258,11 @@ public class IEmpruntImpl implements IEmpruntService {
 
     @Override
     public EmpruntDTO rechercherEmprunt(int id) {
+        Optional<Emprunt> empruntInfo = er.findById(id);
+        if(empruntInfo.isPresent()){
+            Emprunt emprunt = empruntInfo.get();
+            return toDto(emprunt);
+        }
         return null;
     }
 

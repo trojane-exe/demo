@@ -1,7 +1,6 @@
 package com.example.demo.services.Interface;
 
 import com.example.demo.dto.EmpruntDTO;
-import com.example.demo.entities.Emprunt;
 
 import java.util.List;
 
@@ -15,4 +14,6 @@ public interface IEmpruntService {
     //public List<Emprunt> allEmprunts();
     public void retard();
     public String annulerReservation(EmpruntDTO dto);
+
+    public List<EmpruntDTO> findEmpruntsByUserId(Integer id );
 }

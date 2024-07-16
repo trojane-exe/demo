@@ -24,10 +24,11 @@ public class EmpruntController {
 
 
     @GetMapping("/home")
-    public ResponseEntity<List<EmpruntDTO>>allEmprunts(){
-        List<EmpruntDTO> emprunts = es.listerEmprunt();
-        return ResponseEntity.ok(emprunts);
+    public List<EmpruntDTO> myEmprunts( ){
+        return es.findEmpruntsByUserId(2);
     }
+
+
 
 
     @PostMapping("/cancel")
@@ -61,16 +62,6 @@ public class EmpruntController {
         }
     }
 
-    @PostMapping("update_emprunt/admin/{id}")
-    public ResponseEntity<?> modifierEmprunt(@PathVariable("id") Integer id){
-        String resultat = es.modifierEmpruntAdmin(id);
-        if (resultat==null){
-            return  ResponseEntity.ok(resultat);
-        }
-        else{
-            return ResponseEntity.badRequest().body(resultat);
-        }
-    }
     @PostMapping("delete_emprunt/{id}")
     public ResponseEntity<?>supprimerEmprunt(@PathVariable("id")Integer id){
         String resultat = es.supprimerEmprunt(id);
