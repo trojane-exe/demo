@@ -1,6 +1,7 @@
 package com.example.demo.services.Implementation;
 
 import com.example.demo.dto.EmpruntDTO;
+import com.example.demo.dto.ReservationDTO;
 import com.example.demo.entities.*;
 import com.example.demo.repository.DocumentRepository;
 import com.example.demo.repository.EmpruntRepository;
@@ -11,9 +12,11 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @Transactional
@@ -48,11 +51,63 @@ public class IEmpruntImpl implements IEmpruntService {
         else{
             emprunt.setDate_retour_prevue(LocalDate.now().plusDays(7));
         }
-        if(dto.getStatus()!=null) {
-            emprunt.setStatus(StatusEnum.valueOf(dto.getStatus()));
-        }
+//        if(dto.getStatus()!=null) {
+//            emprunt.setStatus(StatusEnum.valueOf(dto.getStatus()));
+//        }
         if(dto.getDate_retour()!=null) {
             emprunt.setDate_retour(dto.getDate_retour());
+        }
+        else{
+            emprunt.setDate_retour(null);
+        }
+        return emprunt;
+    }
+
+    //convertir une Entity en dto :
+    public EmpruntDTO toDto(Emprunt emprunt){
+        EmpruntDTO dto = new EmpruntDTO();
+        if(emprunt.getIdEmp()!=null){
+            dto.setIdEmp(emprunt.getIdEmp());
+        }
+        if(emprunt.getReservation()!=null){
+            dto.setIdRes(emprunt.getReservation().getIdReservation());
+        }
+        if(emprunt.getDate_debut()!=null){
+            dto.setDate_debut(emprunt.getDate_debut());
+        }
+        if(emprunt.getDate_retour_prevue()!=null){
+            dto.setDate_retour_prevue(emprunt.getDate_retour_prevue());
+        }
+        if(emprunt.getDate_retour()!=null){
+            dto.setDate_retour(emprunt.getDate_retour());
+        }
+        if(emprunt.getStatus()!=null){
+            dto.setStatus(emprunt.getStatus().toString());
+        }
+        return dto;
+    }
+
+
+    public Emprunt toEntityUpdate(EmpruntDTO dto){
+        Emprunt emprunt = new Emprunt();
+        if(dto.getDate_debut()!=null) {
+            emprunt.setDate_debut(dto.getDate_debut());
+        }
+        else{
+            emprunt.setDate_debut(LocalDate.now());
+        }
+        if(dto.getDate_retour_prevue()!=null) {
+            emprunt.setDate_retour_prevue(dto.getDate_retour_prevue());
+        }
+        else{
+            emprunt.setDate_retour_prevue(LocalDate.now().plusDays(7));
+        }
+
+        if(dto.getDate_retour()!=null) {
+            emprunt.setDate_retour(dto.getDate_retour());
+        }
+        else{
+            emprunt.setDate_retour(null);
         }
         return emprunt;
     }
@@ -72,9 +127,6 @@ public class IEmpruntImpl implements IEmpruntService {
                 }
             }
             if (empruntDTO.getDate_retour_prevue() == null) {
-                //emprunt.setDate_retour_prevue(emprunt.getDate_retour_prevue());
-                emprunt.setDate_retour(null);
-                emprunt.setReservation(reservation);
                 er.save(emprunt);
                 reservation.setIsActive(false);
                 Transaction transaction = new Transaction();
@@ -82,7 +134,7 @@ public class IEmpruntImpl implements IEmpruntService {
                 transaction.setUtilisateur(reservation.getUtilisateur());
                 transaction.setDate_transaction(emprunt.getDate_debut());
                 tr.save(transaction);
-                return "the return date isn't specified , by default you have 7 days to return the document \n your emprunt is added successfully";
+                return "the return date isn't specified , by default you have 7 days to return the document \nyour emprunt is added successfully";
 
             }
             else if (emprunt.getDate_debut().isAfter(emprunt.getDate_retour_prevue())) {
@@ -108,6 +160,150 @@ public class IEmpruntImpl implements IEmpruntService {
         }
 
     }
+
+    @Override
+    public String annulerReservation(EmpruntDTO dto){
+        Reservation reservation = rr.findById(dto.getIdRes()).orElse(null);
+        if(reservation.getIsActive()) {
+            Emprunt emprunt = toEntity(dto);
+            emprunt.setReservation(emprunt.getReservation());
+            emprunt.setDate_debut(LocalDate.now());
+            emprunt.setDate_retour_prevue(null);
+            emprunt.setDate_retour(null);
+            emprunt.setStatus(StatusEnum.annulé);
+            er.save(emprunt);
+            reservation.setIsActive(false);
+            Transaction transaction = new Transaction();
+            transaction.setEmprunt(emprunt);
+            transaction.setUtilisateur(reservation.getUtilisateur());
+            transaction.setDate_transaction(emprunt.getDate_debut());
+            tr.save(transaction);
+            return "this reservation has been cancelled the transaction is saved ";
+        }
+        else{
+            return "an error occured , this reservation is already used";
+        }
+    }
+
+
+
+    @Override
+    public String modifierEmpruntUser(int id, EmpruntDTO empruntDTO) {
+        //pour l'utilisateur , il peut modifer uniquement la date de debut et date de retour prevue de l'emprunt
+        Emprunt oldEmprunt = er.findById(id).orElse(null);
+        Emprunt emprunt = toEntityUpdate(empruntDTO);
+        if(oldEmprunt != null ) {
+            if (oldEmprunt.getStatus() == StatusEnum.annulé || oldEmprunt.getStatus() == StatusEnum.retourné) {
+                return "this emprunt is canceled or returned";
+            } else if (emprunt.getDate_debut().isAfter(emprunt.getDate_retour_prevue())) {
+                    return "date error: date debut is after date de retour prevue";
+                }
+            else if (emprunt.getDate_debut().isBefore(LocalDate.now())) {
+                return "invalid start date";
+            }
+            else{
+                oldEmprunt.setDate_debut(emprunt.getDate_debut());
+                oldEmprunt.setDate_retour_prevue(emprunt.getDate_retour_prevue());
+                er.save(oldEmprunt);
+                return "updated successfully";
+            }
+
+        }
+        return null;
+    }
+
+    @Override
+    public String modifierEmpruntAdmin(int id){
+        //pour l'admin , il peut modifer la date de retour et le status de l'emprunt
+        Emprunt oldEmprunt = er.findById(id).orElse(null);
+        if(oldEmprunt != null ) {
+            if (oldEmprunt.getStatus() == StatusEnum.annulé || oldEmprunt.getStatus() == StatusEnum.retourné) {
+                return "this emprunt is canceled or returned";
+            }
+            else{
+                oldEmprunt.setDate_retour(LocalDate.now());
+                oldEmprunt.setStatus(StatusEnum.retourné);
+                er.save(oldEmprunt);
+                return "updated successfully : retourné";
+            }
+
+        }
+        return null;
+
+    }
+
+    @Override
+    public String supprimerEmprunt(int id) {
+        Emprunt emprunt = er.findById(id).orElse(null);
+        if(emprunt==null){
+            return "error : the emrpunt can't be found";
+        }
+        else {
+            er.deleteById(id);
+        }
+        return null;
+    }
+
+    @Override
+    public EmpruntDTO rechercherEmprunt(int id) {
+        return null;
+    }
+
+    @Override
+    public List<EmpruntDTO> listerEmprunt() {
+        //i need to use a dto and link it to the actuall enitity so I can retrieve only the fields requeired like in the reservation all i need is the id
+        List<Emprunt> emprunts = er.findAll();
+        List<EmpruntDTO> dto = new ArrayList<>();
+        for(Emprunt emprunt:emprunts){
+            EmpruntDTO dtos = toDto(emprunt);
+            dto.add(dtos);
+        }
+        return dto;
+    }
+
+//    @Override
+//    public List<Emprunt>allEmprunts(){
+//        return er.allEmprunts();
+//    }
+
+
+    @Override
+    public void retard() {
+        List<Emprunt> listofEmprunt = er.findAll();
+        for(Emprunt em : listofEmprunt){
+            if(em.getDate_retour_prevue()!=null && (LocalDate.now().isAfter(em.getDate_retour_prevue()))){
+                em.setStatus(StatusEnum.retardé);
+                er.save(em);
+            }
+        }
+    }
+    @PostConstruct
+    public void onAppLoad(){
+        retard();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    @Override
 //    public String ajouterEmprunt(EmpruntDTO empruntDTO) {
@@ -148,65 +344,3 @@ public class IEmpruntImpl implements IEmpruntService {
 //        }
 //
 //    }
-
-    @Override
-    public String modifierEmprunt(int id, EmpruntDTO empruntDTO) {
-        //pour l'utilisateur , il peut modifer uniquement la date de debut et date de retour prevue de l'emprunt
-        Emprunt oldEmprunt = er.findById(id).orElse(null);
-        if(oldEmprunt != null ) {
-            if (oldEmprunt.getStatus() == StatusEnum.annulé || oldEmprunt.getStatus() == StatusEnum.retourné) {
-                return "this emprunt is canceled or returned";
-            } else {
-                if (empruntDTO.getDate_debut().isAfter(empruntDTO.getDate_retour_prevue())) {
-                    return "date error: date debut is after date de retour prevue";
-                } else {
-                    if (empruntDTO.getDate_retour_prevue() != null) {
-                        oldEmprunt.setDate_retour_prevue(empruntDTO.getDate_retour_prevue());
-                    }
-                    if (empruntDTO.getDate_debut() != null) {
-                        oldEmprunt.setDate_debut(empruntDTO.getDate_debut());
-                    }
-                }
-            }
-
-        }
-        return null;
-    }
-
-    @Override
-    public String supprimerEmprunt(int id) {
-        Emprunt emprunt = er.findById(id).orElse(null);
-        if(emprunt==null){
-            return "error : the emrpunt can't be found";
-        }
-        else {
-            er.deleteById(id);
-        }
-        return null;
-    }
-
-    @Override
-    public EmpruntDTO rechercherEmprunt(int id) {
-        return null;
-    }
-
-    @Override
-    public List<EmpruntDTO> listerEmprunt() {
-        return List.of();
-    }
-
-    @Override
-    public void retard() {
-        List<Emprunt> listofEmprunt = er.findAll();
-        for(Emprunt em : listofEmprunt){
-            if(em.getDate_retour_prevue()!=null && (LocalDate.now().isAfter(em.getDate_retour_prevue()))){
-                em.setStatus(StatusEnum.retardé);
-                er.save(em);
-            }
-        }
-    }
-    @PostConstruct
-    public void onAppLoad(){
-        retard();
-    }
-}
