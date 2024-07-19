@@ -1,0 +1,34 @@
+<h2 style="color: crimson;">my personal data</h2>
+
+<form>
+    <div class="mb-3">
+      <label for="nom" class="form-label" >Nom</label>
+      <input type="text" class="form-control" id="nom" value="{{profile.nom}}" disabled>
+    </div>
+    <div class="mb-3">
+      <label for="prenom" class="form-label">Prenom</label>
+      <input type="text" class="form-control" id="prenom" value="{{profile.prenom}}" disabled>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" value="{{profile.email}}"disabled>
+      </div>
+      <div class="mb-3">
+        <label for="adress" class="form-label">Adresse</label>
+        <input type="text" class="form-control" id="adress" value="{{profile.adresse}}"disabled>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password"  class="form-control" id="passwordId" value="{{profile.password}}"disabled>
+        <button type="button" id="toggleBtn" class="btn btn-outline-danger" onclick="toggleClick()">
+            show
+        </button>
+      </div>
+      
+
+
+
+    <button type="button" class="btn btn-primary" >Update my info</button>
+
+
+  </form>

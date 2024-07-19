@@ -1,5 +1,6 @@
 package com.example.demo.services.Implementation;
 
+import com.example.demo.entities.RoleEnum;
 import com.example.demo.entities.Utilisateur;
 import com.example.demo.repository.UtilisateurRepository;
 import com.example.demo.services.Interface.IUtilisateurService;
@@ -29,6 +30,12 @@ public class IUtilisateurImpl implements IUtilisateurService {
 
     @Override
     public void ajouterUser(Utilisateur utilisateur){
+        if(utilisateur.getRole()==null){
+            utilisateur.setRole(RoleEnum.User);
+        }
+        else{
+            utilisateur.setRole(utilisateur.getRole());
+        }
         ur.save(utilisateur);
     }
 

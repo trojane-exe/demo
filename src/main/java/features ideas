@@ -1,2 +1,4 @@
 possible d'ajouter une fonction de recherche des emrpunt par utilisateur pour l'admin
 je dois separer aussi le controlleur d'utilisateur pour afficher uniquement ke compte de l'utilisateur , et tous les comptes pour l'admin
+worked on the user fom to display his info , with the toggle buttonto show and hide the password , and diseabling all the inputs,
+monday inchaalah i will work on the update form to update an user and i will try to link the table 'Utilisateur' from the database with that form
