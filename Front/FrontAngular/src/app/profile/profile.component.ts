@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class ProfileComponent {
   profile={
+    id:1,
     nom:'elbouazzaoui',
     prenom: 'soufiane',
     adresse: '123 Main St',

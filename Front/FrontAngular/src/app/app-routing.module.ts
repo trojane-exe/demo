@@ -1,15 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
+import { UpdateInfoComponent } from './update-info/update-info.component';
+import { LoginComponent } from './login/login.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  // {
-  //   path:'',
-  //   component:ProfileComponent
-  // },
+
   {
     path:'profile',
-    component:ProfileComponent
+    component:ProfileComponent},
+    {
+    path:'update-profile',
+    component:UpdateInfoComponent
+  },
+  {path:'login',
+    component:LoginComponent,
   }
 ];
 
