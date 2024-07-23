@@ -6,6 +6,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UpdateInfoComponent } from './update-info/update-info.component';
 import { LoginComponent } from './login/login.component';
+import{ FormsModule} from '@angular/forms';
+import { UsersComponent } from './users/users.component';
+import { AddUserComponent } from './add-user/add-user.component';
+
 
 @NgModule({
   declarations: [
@@ -13,11 +17,14 @@ import { LoginComponent } from './login/login.component';
     NavbarComponent,
     ProfileComponent,
     UpdateInfoComponent,
-    LoginComponent
+    LoginComponent,
+    UsersComponent,
+    AddUserComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

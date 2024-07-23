@@ -1,6 +1,6 @@
 
-  <div class="container col-md-6 offset-mid-3">
-    <h3 style="text-align: center;"> My personal infos </h3>
+<div class="container col-md-6 offset-mid-3">
+    <h3 style="text-align: center;"> Add new user </h3>
     <form >
       
 
@@ -25,6 +25,17 @@
             <label for="adress" class="form-label">Adresse</label>
         <input type="text" class="form-control" id="adress" >
         </div>
+        <div class="form-group">
+            <label for="role" class="form-label">Role</label>
+            <select class="form-select"  >
+                
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+    
+              </select>
+
+            
+        </div>
 
         <div>
             <label for="password" class="form-label">Password</label>
@@ -39,8 +50,8 @@
             </div>
         </div>
 
-        <a routerLink="/update-profile" class="btn btn-success" type="button" style="margin-top: 10px;"> Update </a>
-        <a routerLink="" class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;"> go back </a>
+        <a routerLink="/users" class="btn btn-success" type="button" style="margin-top: 10px;"> Save </a>
+        <a routerLink="/users" class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;"> go back </a>
     </form>
 
 </div>

@@ -4,6 +4,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { UpdateInfoComponent } from './update-info/update-info.component';
 import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
+import { UsersComponent } from './users/users.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 const routes: Routes = [
 
@@ -14,9 +16,18 @@ const routes: Routes = [
     path:'update-profile',
     component:UpdateInfoComponent
   },
-  {path:'login',
+  {path:'',
     component:LoginComponent,
+  },
+  {
+    path:'users',
+    component:UsersComponent,
+  },
+  {
+    path:'add-user',
+    component:AddUserComponent
   }
+
 ];
 
 @NgModule({

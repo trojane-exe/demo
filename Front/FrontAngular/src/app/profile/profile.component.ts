@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -14,5 +15,27 @@ export class ProfileComponent {
     email: 'test@gmail.com',
     password:'12345'
   }
+
+  password: string = this.profile.password;
+
+  toggleClick() {
+    const button = document.getElementById('toggleBtn') as HTMLButtonElement;
+    const inputpass = document.getElementById('passwordId') as HTMLInputElement;
+
+    if (inputpass.type === 'password') {
+      inputpass.type = 'text';
+      button.textContent = 'Hide';
+    } else {
+      inputpass.type = 'password';
+      button.textContent = 'Show';
+    }
+  }
+
+  ngOnInit():void{
+    
+  }
+
+  
+
 
 }

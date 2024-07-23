@@ -1,0 +1,46 @@
+
+<a routerLink="/add-user" class="btn btn-info"> add a new user</a>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">idUser</th>
+        <th scope="col">nom</th>
+        <th scope="col">prenom</th>
+        <th scope="col">email</th>
+        <th scope="col">password</th>
+        <th scope="col"></th>
+        <th scope="col">adresse</th>
+        <th scope="col">role</th>
+        <th scope="col">update</th>
+        <th scope="col">delete</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of listusers">
+        <th >{{user.id}}</th>
+        <td class="column">{{user.nom}}</td>
+        <td class="column">{{user.prenom}}</td>
+        <td class="column">{{user.email}}</td>
+        <td class="column">  
+            <span *ngIf="!user.showPassword" style="font-weight: bold;">******</span>
+            <span *ngIf="user.showPassword">{{user.motDePasse}}</span></td>
+        <td class="column">
+            <button class="btn btn-outline-danger" (click)="togglePasswordVisibility(user)">Show</button>
+        </td>
+        <td class="column">{{user.adresse}}</td>
+        <td class="column">{{user.role}}</td>
+        <td class="column">
+            <button class="btn btn-outline-danger" routerLink="/update-profile">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+        </td>
+        <td class="column">
+        <button class="btn btn-outline-danger" (click)="deleteUser(user)">
+            <i class="bi bi-trash"></i>
+        </button>
+    </td>
+      </tr>
+      
+    </tbody>
+  </table>

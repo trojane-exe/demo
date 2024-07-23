@@ -39,6 +39,7 @@
   <div class="container col-md-6 offset-mid-3">
     <h3 style="text-align: center;"> My personal infos </h3>
     <form >
+      
 
         <div class="form-group">
             <input type="text" name="idUser" id="Iduser" disabled hidden  value="{{profile.id}}">
@@ -49,7 +50,7 @@
 
         <div class="form-group">
             <label for="prenom" class="form-label">Prenom</label>
-            <input type="text" class="form-control" id="prenom" value="{{profile.prenom}}" disabled>
+            <input type="text" class="form-control" id="prenomtxt" value="{{profile.prenom}}" disabled>
         </div>
 
         <div class="form-group">
@@ -64,8 +65,8 @@
 
         <label for="password" class="form-label">Password</label>
         <div class="mb-3" class="d-flex align-items-center">
-        <input type="password"  class="form-control" id="passwordId" value="{{profile.password}}"disabled>
-        <button type="button" id="toggleBtn" class="btn btn-outline-danger" onclick="toggleClick()">
+        <input type="password" class="form-control" id="passwordId" value="{{profile.password}}"disabled [(ngModel)]="password" name="fd" >
+        <button type="button" id="toggleBtn" class="btn btn-outline-danger" (click)="toggleClick()">
             show
         </button>
     </div>
@@ -74,4 +75,5 @@
         <a routerLink="" class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;"> go back </a>
         <button class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;"> Delete my Account  </button>
     </form>
+
 </div>
