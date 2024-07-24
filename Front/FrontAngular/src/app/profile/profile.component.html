@@ -1,40 +1,4 @@
 
-<!-- 
-<form>
-    <div class="mb-3">
-      <label for="nom" class="form-label" >Nom</label>
-      <input type="text" class="form-control" id="nom" value="{{profile.nom}}" disabled>
-    </div>
-    <div class="mb-3">
-      <label for="prenom" class="form-label">Prenom</label>
-      <input type="text" class="form-control" id="prenom" value="{{profile.prenom}}" disabled>
-    </div>
-    <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" value="{{profile.email}}"disabled>
-      </div>
-      <div class="mb-3">
-        <label for="adress" class="form-label">Adresse</label>
-        <input type="text" class="form-control" id="adress" value="{{profile.adresse}}"disabled>
-      </div>
-      <div class="mb-3">
-        
-        <label for="password" class="form-label">Password</label>
-        <div class="mb-3" class="d-flex align-items-center">
-        <input type="password"  class="form-control" id="passwordId" value="{{profile.password}}"disabled>
-        <button type="button" id="toggleBtn" class="btn btn-outline-danger" onclick="toggleClick()">
-            show
-        </button>
-    </div>
-      </div>
-      
-
-
-
-    <button type="button" class="btn btn-primary" >Update my info</button>
-
-
-  </form> -->
 
   <div class="container col-md-6 offset-mid-3">
     <h3 style="text-align: center;"> My personal infos </h3>
@@ -44,28 +8,28 @@
         <div class="form-group">
             <input type="text" name="idUser" id="Iduser" disabled hidden  value="{{profile.id}}">
             <label style="margin-bottom: 10px"> Nom </label>
-            <input type="text" class="form-control" id="nom" value="{{profile.nom}}" disabled>
+            <input type="text" class="form-control" id="nom" [(ngModel)]="profile.nom" name="nom" disabled>
             
         </div>
 
         <div class="form-group">
             <label for="prenom" class="form-label">Prenom</label>
-            <input type="text" class="form-control" id="prenomtxt" value="{{profile.prenom}}" disabled>
+            <input type="text" class="form-control" id="prenomtxt" [(ngModel)]="profile.prenom" name="pren"  disabled>
         </div>
 
         <div class="form-group">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" value="{{profile.email}}"disabled>
+            <input type="email" class="form-control" id="email" [(ngModel)]="profile.email" name="email" disabled>
         </div>
 
         <div class="form-group">
             <label for="adress" class="form-label">Adresse</label>
-        <input type="text" class="form-control" id="adress" value="{{profile.adresse}}"disabled>
+        <input type="text" class="form-control" id="adress" [(ngModel)]="profile.adresse" name="adrs" disabled>
         </div>
 
         <label for="password" class="form-label">Password</label>
         <div class="mb-3" class="d-flex align-items-center">
-        <input type="password" class="form-control" id="passwordId" value="{{profile.password}}"disabled [(ngModel)]="password" name="fd" >
+        <input type="password" class="form-control" id="passwordId" [(ngModel)]="profile.password" name="pss" disabled  name="fd" >
         <button type="button" id="toggleBtn" class="btn btn-outline-danger" (click)="toggleClick()">
             show
         </button>
@@ -73,7 +37,7 @@
 
         <a routerLink="/update-profile" class="btn btn-success" type="button" style="margin-top: 10px;"> Update </a>
         <a routerLink="" class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;"> go back </a>
-        <button class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;"> Delete my Account  </button>
+        <button class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;" (click)="deleteAccount()"> Delete my Account  </button>
     </form>
 
 </div>

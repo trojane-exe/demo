@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -6,21 +7,41 @@ import { Component } from '@angular/core';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent {
-  profile={
-    id:1,
-    nom:'elbouazzaoui',
-    prenom: 'soufiane',
-    adresse: '123 Main St',
-    email: 'test@gmail.com',
-    password:'12345'
+export class ProfileComponent implements OnInit{
+
+  profile = {
+    id: 0,
+    nom: '',
+    prenom: '',
+    adresse: '',
+    email: '',
+    password: ''
+  };
+
+  constructor(private router : Router){}
+
+
+
+  deleteAccount(){
+    const dialog = confirm("are you sure you want to delete the account");
+    if(dialog){
+      alert("i will handle the delete later");
+      
+      this.router.navigate(['']);
+
+    }
+    else{
+      alert("nothing");
+    }
+    
   }
 
-  password: string = this.profile.password;
+
 
   toggleClick() {
     const button = document.getElementById('toggleBtn') as HTMLButtonElement;
     const inputpass = document.getElementById('passwordId') as HTMLInputElement;
+    
 
     if (inputpass.type === 'password') {
       inputpass.type = 'text';
@@ -32,6 +53,19 @@ export class ProfileComponent {
   }
 
   ngOnInit():void{
+    this.profile={
+      id:1,
+      nom:'elbouazzaoui',
+      prenom: 'soufiane',
+      adresse: '123 Main St',
+      email: 'test@gmail.com',
+      password:'12345'
+    }
+
+
+    
+
+  
     
   }
 

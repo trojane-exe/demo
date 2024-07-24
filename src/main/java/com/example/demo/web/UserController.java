@@ -1,6 +1,7 @@
 package com.example.demo.web;
 
 
+import com.example.demo.dto.UtilisateurDTO;
 import com.example.demo.entities.Utilisateur;
 import com.example.demo.services.Interface.IUtilisateurService;
 
@@ -26,8 +27,8 @@ public class UserController {
     }
 
     @GetMapping("/users_home")
-    public ResponseEntity<List<Utilisateur>> allUsers(){
-        List<Utilisateur> users = us.listUsers();
+    public ResponseEntity<List<UtilisateurDTO>> allUsers(){
+        List<UtilisateurDTO> users = us.listUsers();
         return ResponseEntity.ok(users);
     }
 

@@ -1,5 +1,6 @@
 package com.example.demo.services.Implementation;
 
+import com.example.demo.dto.UtilisateurDTO;
 import com.example.demo.entities.RoleEnum;
 import com.example.demo.entities.Utilisateur;
 import com.example.demo.repository.UtilisateurRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.parser.Entity;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,18 @@ public class IUtilisateurImpl implements IUtilisateurService {
         this.ur = userRep;
     }
 
+    public UtilisateurDTO toDto (Utilisateur utilisateur){
+        UtilisateurDTO dto = new UtilisateurDTO();
+        dto.setIdUser(utilisateur.getIdUser());
+        dto.setNom(utilisateur.getNom());
+        dto.setPrenom(utilisateur.getPrenom());
+        dto.setAdresse(utilisateur.getAdresse());
+        dto.setEmail(utilisateur.getEmail());
+        dto.setPassword(utilisateur.getPassword());
+        dto.setRole(utilisateur.getRole().toString());
+        return dto;
+    }
+
     @Override
     public void deleteAll(){
         ur.deleteAll();
@@ -30,7 +44,7 @@ public class IUtilisateurImpl implements IUtilisateurService {
 
     @Override
     public void ajouterUser(Utilisateur utilisateur){
-        if(utilisateur.getRole()==null){
+        if(utilisateur.getRole()==null||utilisateur.getRole().describeConstable().isEmpty()){
             utilisateur.setRole(RoleEnum.User);
         }
         else{
@@ -79,7 +93,13 @@ public class IUtilisateurImpl implements IUtilisateurService {
     }
 
     @Override
-    public List<Utilisateur> listUsers() {
-        return ur.findAll();
+    public List<UtilisateurDTO> listUsers() {
+        List<Utilisateur> users = ur.findAll();
+        List<UtilisateurDTO> dto = new ArrayList<>();
+        for (Utilisateur user : users){
+            UtilisateurDTO dtos = toDto(user);
+            dto.add(dtos);
+        }
+        return dto;
     }
 }

@@ -17,14 +17,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of listusers">
-        <th >{{user.id}}</th>
+      <tr *ngFor="let user of users">
+        <th >{{user.idUser}}</th>
         <td class="column">{{user.nom}}</td>
         <td class="column">{{user.prenom}}</td>
         <td class="column">{{user.email}}</td>
-        <td class="column">  
-            <span *ngIf="!user.showPassword" style="font-weight: bold;">******</span>
-            <span *ngIf="user.showPassword">{{user.motDePasse}}</span></td>
+        <td class="column">  {{user.password}}
+            <!-- <span *ngIf="!user.showPassword" style="font-weight: bold;">******</span>
+            <span *ngIf="user.showPassword">{{user.password}}</span></td> -->
         <td class="column">
             <button class="btn btn-outline-danger" (click)="togglePasswordVisibility(user)">Show</button>
         </td>
