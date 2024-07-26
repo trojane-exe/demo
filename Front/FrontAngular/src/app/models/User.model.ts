@@ -1,10 +1,10 @@
-export interface User{
-    idUser : number|null;
-    nom : string|null;
-    prenom :string|null;
-    adresse :string|null
-    email :string|null;
-    password :string|null;
-    role :string|null;
+export class User{
+    idUser!: number;
+    nom : string|null| undefined;
+    prenom :string|null| undefined;
+    adresse :string|null| undefined;
+    email :string|null| undefined;
+    password :string|null| undefined;
+    role :string|null| undefined;
 
 }

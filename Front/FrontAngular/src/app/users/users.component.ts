@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
 import { Router } from '@angular/router';
-import { TestingAPIService } from '../services/newUsers/testing-api.service';
+//import { TestingAPIService } from '../services/newUsers/testing-api.service';
 import { User } from '../models/User.model';
+import { GestionUtilisateurService } from '../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
 
 @Component({
   selector: 'app-users',
@@ -13,25 +14,59 @@ export class UsersComponent {
   listusers! :Array<any>;
 
   users:User[]=[];
+  showPasswordMap = new Map<number,boolean>();
 
-  errorMessage! : string ;
 
-  deleteUser(user:any){
-    let id = this.listusers.indexOf(user);
-    this.listusers.splice(id,1);
-
-  }
-  constructor (private router : Router,private userService : TestingAPIService){};
+  constructor (private router : Router,private userService : GestionUtilisateurService){};
 
   
     
-  togglePasswordVisibility(user: any) {
-    user.showPassword = !user.showPassword;
+  togglePasswordVisibility(userId: number) {
+    const currentState = this.showPasswordMap.get(userId) || false;
+    this.showPasswordMap.set(userId, !currentState);
+  }
+
+
+  
+
+
+  // khasni ndir les chams kamlin required bach manl9ach prb mea  input b string null
+
+
+
+
+
+  deleteUser(id : number) : void{
+    if (id === null) {
+      console.error('User ID is null');
+      return;
+    }
+    const dialog  = confirm("are you sure you want to delete this user!!");
+    if(dialog){
+      this.userService.deleteUser(id).subscribe({
+        next: () => {
+          this.users = this.users.filter(user => user.idUser !==id);
+          alert("deleted successfully");
+        },
+        error: (err) => {
+          console.error('error deleting',err);
+        }
+
+
+
+      })
+    }
+
+
+
+
+
   }
 
   loadUsers():void{
     this.userService.getAllUsers().subscribe({
       next : (data)=>{
+     
         
         this.users = data;
       },

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -35,8 +36,8 @@ public class Utilisateur {
     private RoleEnum role;
 
     @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL , orphanRemoval = true)
-    private List<Transaction> transactions;
+    private List<Transaction> transactions = new ArrayList<>();
 
     @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL , orphanRemoval = true)
-    private List<Reservation> reservations;
+    private List<Reservation> reservations = new ArrayList<>();
 }

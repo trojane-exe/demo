@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.Role;
 import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,15 +26,40 @@ public class IUtilisateurImpl implements IUtilisateurService {
         this.ur = userRep;
     }
 
+
+
+
+
+
+
+    public Utilisateur toEntity(UtilisateurDTO dto){
+        Utilisateur user  =  new Utilisateur();
+        user.setIdUser(dto.getIdUser());
+        user.setPrenom(dto.getPrenom());
+        user.setNom(dto.getNom());
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
+        user.setRole(RoleEnum.valueOf(dto.getRole()));
+        user.setAdresse(dto.getAdresse());
+        return user;
+    }
+
+
+
+
+
+
+
+
     public UtilisateurDTO toDto (Utilisateur utilisateur){
         UtilisateurDTO dto = new UtilisateurDTO();
-        dto.setIdUser(utilisateur.getIdUser());
-        dto.setNom(utilisateur.getNom());
-        dto.setPrenom(utilisateur.getPrenom());
-        dto.setAdresse(utilisateur.getAdresse());
-        dto.setEmail(utilisateur.getEmail());
-        dto.setPassword(utilisateur.getPassword());
-        dto.setRole(utilisateur.getRole().toString());
+        dto.setIdUser(utilisateur.getIdUser()!= null ? utilisateur.getIdUser() : null);
+        dto.setNom(utilisateur.getNom()!= null ? utilisateur.getNom() : "UNDEFINED");
+        dto.setPrenom(utilisateur.getPrenom()!= null ? utilisateur.getPrenom() : "UNDEFINED");
+        dto.setAdresse(utilisateur.getAdresse()!= null ? utilisateur.getAdresse() : "UNDEFINED");
+        dto.setEmail(utilisateur.getEmail()!= null ? utilisateur.getEmail() : "UNDEFINED");
+        dto.setPassword(utilisateur.getPassword() != null ? utilisateur.getPassword() : "UNDEFINED");
+        dto.setRole(utilisateur.getRole() != null ? utilisateur.getRole().toString(): "UNKNOWN");
         return dto;
     }
 
@@ -42,14 +68,27 @@ public class IUtilisateurImpl implements IUtilisateurService {
         ur.deleteAll();
     }
 
+
     @Override
-    public void ajouterUser(Utilisateur utilisateur){
-        if(utilisateur.getRole()==null||utilisateur.getRole().describeConstable().isEmpty()){
+    public void addUser(Utilisateur utilisateur){
+        if(utilisateur.getRole()==null){
             utilisateur.setRole(RoleEnum.User);
+            ur.save(utilisateur);
         }
         else{
-            utilisateur.setRole(utilisateur.getRole());
+            ur.save(utilisateur);
         }
+    }
+
+    @Override
+    public void ajouterUser(UtilisateurDTO userdto){
+        if(userdto.getRole()==null||userdto.getRole().describeConstable().isEmpty()){
+            userdto.setRole(RoleEnum.User.toString());
+        }
+        else{
+            userdto.setRole(userdto.getRole());
+        }
+        Utilisateur utilisateur = toEntity(userdto);
         ur.save(utilisateur);
     }
 
@@ -101,5 +140,10 @@ public class IUtilisateurImpl implements IUtilisateurService {
             dto.add(dtos);
         }
         return dto;
+    }
+
+    @Override
+    public List<Utilisateur> getAllUsers(){
+        return ur.findAll();
     }
 }

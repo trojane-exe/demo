@@ -13,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @RestController
@@ -30,6 +32,12 @@ public class UserController {
     public ResponseEntity<List<UtilisateurDTO>> allUsers(){
         List<UtilisateurDTO> users = us.listUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/home2")
+    public ResponseEntity<List<Utilisateur>> getAllUsers(){
+        List<Utilisateur> allusers = us.getAllUsers();
+        return ResponseEntity.ok(allusers);
     }
 
     @GetMapping(/*/users_home/*/"/{id}")
@@ -50,8 +58,9 @@ public class UserController {
         return "add_user";
     }
 
+
     @PostMapping("/add_user")
-    public ResponseEntity<?> addUser(@Validated @RequestBody Utilisateur user) {
+    public ResponseEntity<?> addUser(@Validated @RequestBody UtilisateurDTO user) {
         try {
             us.ajouterUser(user);
             return ResponseEntity.status(HttpStatus.CREATED).body("User added successfully");
@@ -71,9 +80,11 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PostMapping("/delete_user/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id){
+    @DeleteMapping("/delete_user/{id}")
+    public ResponseEntity<Map<String,String>> deleteUser(@PathVariable("id") Integer id){
         us.supprimerUser(id);
-        return ResponseEntity.ok("Deleted Successfully");
+        Map<String,String> reponse = new HashMap<>();
+        reponse.put("message","delete success");
+        return ResponseEntity.ok(reponse);
     }
 }

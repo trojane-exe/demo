@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit{
 
 
   deleteAccount(){
+    
     const dialog = confirm("are you sure you want to delete the account");
     if(dialog){
       alert("i will handle the delete later");

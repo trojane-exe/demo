@@ -22,11 +22,13 @@
         <td class="column">{{user.nom}}</td>
         <td class="column">{{user.prenom}}</td>
         <td class="column">{{user.email}}</td>
-        <td class="column">  {{user.password}}
-            <!-- <span *ngIf="!user.showPassword" style="font-weight: bold;">******</span>
-            <span *ngIf="user.showPassword">{{user.password}}</span></td> -->
         <td class="column">
-            <button class="btn btn-outline-danger" (click)="togglePasswordVisibility(user)">Show</button>
+          <span *ngIf="!showPasswordMap.get(user.idUser)" style="font-weight: bold;">******</span>
+          <span *ngIf="showPasswordMap.get(user.idUser)">{{ user.password }}</span>
+
+        </td>
+        <td class="column">
+            <button class="btn btn-outline-danger" (click)="togglePasswordVisibility(user.idUser)">{{ showPasswordMap.get(user.idUser) ? 'Hide' : 'Show' }}</button>
         </td>
         <td class="column">{{user.adresse}}</td>
         <td class="column">{{user.role}}</td>
@@ -36,7 +38,7 @@
             </button>
         </td>
         <td class="column">
-        <button class="btn btn-outline-danger" (click)="deleteUser(user)">
+        <button class="btn btn-outline-danger" (click)="deleteUser(user.idUser)">
             <i class="bi bi-trash"></i>
         </button>
     </td>
