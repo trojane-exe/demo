@@ -1,30 +1,36 @@
 
   <div class="container col-md-6 offset-mid-3">
     <h3 style="text-align: center;"> My personal infos </h3>
-    <form >
+    <form (ngSubmit)="updateUser(updateUserForm)" #updateUserForm="ngForm" novalidate autocomplete="off">
       
 
         <div class="form-group">
             <input type="number" [(ngModel)]="user.idUser" name="idUser" id="Iduser" disabled hidden>
             <label style="margin-bottom: 10px"> Nom </label>
-            <input type="text" class="form-control" id="nom" [(ngModel)]="user.nom" name="nom"
+            <input type="text" required class="form-control" id="nom" [(ngModel)]="user.nom" name="nom"
             #name="ngModel" [class.is-invalid]="name.invalid && name.touched">
             <small [class.d-none]="name.valid || name.untouched" class="text-danger">Name is required</small>            
         </div>
 
         <div class="form-group">
             <label for="prenom" class="form-label">Prenom</label>
-            <input type="text" class="form-control" id="prenomtxt" [(ngModel)]="user.prenom" name="prenom">
+            <input type="text" class="form-control" id="prenomtxt" [(ngModel)]="user.prenom" name="prenom"
+            required #prenom="ngModel" [class.is-invalid]="prenom.invalid && prenom.touched" >
+            <small [class.d-none]="prenom.valid || prenom.untouched" class="text-danger">Prenom is required</small>
         </div>
 
         <div class="form-group">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" [(ngModel)]="user.email" name="email">
+            <input type="email" class="form-control" id="email" [(ngModel)]="user.email" name="email" 
+            required #email="ngModel" [class.is-invalid]="email.invalid && email.touched"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" autocomplete="off"
+            placeholder="a valid email: text12@email.cp">
+            <small [class.d-none]="email.valid || email.untouched" class="text-danger">Please respect the email format and fill the input</small>
         </div>
 
         <div class="form-group">
             <label for="adress" class="form-label">Adresse</label>
-        <input onfocus="this.select()" [placeholder]="user.adresse!== null && user.adresse!== ''? user.adresse : undefined"
+        <input  [placeholder]="user.adresse!== null && user.adresse!== ''? user.adresse : undefined"
         type="text" class="form-control" id="adress" [(ngModel)]="user.adresse" name="adresse">
         </div>
         <div class="form-group">
@@ -36,19 +42,27 @@
 
         <div>
             <label for="password" class="form-label">Password</label>
-            <div class="mb-3" class="d-flex align-items-center">
-            <input type="password" class="form-control" id="passwordId" [(ngModel)]="user.password" name="pass" >
-            </div>
+            
+            <input type="password" class="form-control" id="passwordId" [(ngModel)]="user.password" name="pass" 
+                onfocus="this.select()" required #password="ngModel" [class.is-invalid]="password.invalid && password.touched" >
+                <small [class.d-none]="password.valid || password.untouched" class="text-danger">Password is required</small>
+            
         </div>
         <div>
             <label for="password" class="form-label">Confirm Password</label>
-            <div class="mb-3" class="d-flex align-items-center">
-            <input type="password" class="form-control" id="passwordIdConfirm" [(ngModel)]="confirmfield" name="confirm">
-            </div>
+            
+            <input type="password" class="form-control" id="passwordIdConfirm" [(ngModel)]="confirmfield" name="confirm"
+            onfocus="this.select()" required #confinput="ngModel" [class.is-invalid]="confinput.invalid && confinput.touched">
+            <small [class.d-none]="confinput.valid || confinput.untouched" class="text-danger">The Confirm password is required and should match the password</small>
+            
         </div>
 
-        <a routerLink="/update-profile" class="btn btn-success" type="button" style="margin-top: 10px;"> Update </a>
-        <a routerLink="" class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;"> go back </a>
+
+        <button class="btn btn-success"  style="margin-top: 10px;" type="submit">update infos</button>
+        <a routerLink="/users" class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;"> go back </a>
     </form>
+    <div *ngIf="errormessage" class="alert alert-danger "  role="alert">
+        {{ errormessage }}
+    </div>
 
 </div>

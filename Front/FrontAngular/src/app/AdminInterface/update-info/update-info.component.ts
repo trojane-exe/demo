@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/User.model';
 import { GestionUtilisateurService } from '../../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
 import { NgForm, NgModel } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-update-info',
   templateUrl: './update-info.component.html',
@@ -11,12 +12,13 @@ import { NgForm, NgModel } from '@angular/forms';
 export class UpdateInfoComponent implements OnInit{
 
 
-
+  errormessage! : string;
   roles : string[]=['Admin','User'];
   confirmfield! :any;
   user : User =  new User();
   id! : number
-  constructor(private router : Router,private userService :GestionUtilisateurService, private route : ActivatedRoute){}
+  constructor(private router : Router,
+    private toastService : ToastrService,private userService :GestionUtilisateurService, private route : ActivatedRoute){}
 
 
 
@@ -36,7 +38,36 @@ export class UpdateInfoComponent implements OnInit{
   // }
 
   updateUser(form:NgForm):void{
-    
+
+    const pass = (document.getElementById('passwordId')as HTMLInputElement).value;
+    const confirm = (document.getElementById('passwordIdConfirm') as HTMLInputElement).value;
+    if(form.invalid){
+      this.errormessage = 'please fill all the required fields';
+      return;
+    }
+    else{
+      if (pass!=confirm){
+        alert('the passwords arent matching!!')
+      }
+      else{
+      this.userService.updateUser(this.id,this.user).subscribe({
+      next: () => {
+        this.router.navigate(['/users']);
+        this.toastService.success('User added successfully!', 'Success!', {
+          timeOut: 3000,
+          toastClass: 'alert alert-success',
+          positionClass:'top-right'
+        });
+        
+      },
+      error: (err) => {
+        this.errormessage='Erreur lors de la modification de l\'utilisateur',+err;
+      }
+    });
+  }
+    }
+
+
   }
 
   loadUserInfo(id : number) : void{

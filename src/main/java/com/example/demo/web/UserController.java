@@ -70,7 +70,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/update_user/{id}")
+    @PutMapping("/update_user/{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") Integer id,@Validated @RequestBody Utilisateur user){
         try{
             us.modifierUser(id,user);
