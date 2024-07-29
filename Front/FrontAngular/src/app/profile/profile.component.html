@@ -1,4 +1,4 @@
-
+<!-- 
 
   <div class="container col-md-6 offset-mid-3">
     <h3 style="text-align: center;"> My personal infos </h3>
@@ -40,4 +40,48 @@
         <button class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;" (click)="deleteAccount()"> Delete my Account  </button>
     </form>
 
-</div>
+</div> -->
+
+
+
+<div class="container col-md-6 offset-mid-3">
+    <h3 style="text-align: center;"> My personal infos </h3>
+    <form >
+      
+
+        <div class="form-group">
+            <input type="number" name="idUser" id="Iduser" disabled hidden >
+            <label style="margin-bottom: 10px"> Nom </label>
+            <input type="text" class="form-control" id="nom"  name="nom" disabled>
+            
+        </div>
+
+        <div class="form-group">
+            <label for="prenom" class="form-label">Prenom</label>
+            <input type="text" class="form-control" id="prenomtxt"  name="pren"  disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email"  name="email" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="adress" class="form-label">Adresse</label>
+        <input type="text" class="form-control" id="adress"  name="adrs" disabled>
+        </div>
+
+        <label for="password" class="form-label">Password</label>
+        <div class="mb-3" class="d-flex align-items-center">
+        <input type="password" class="form-control" id="passwordId" name="pss" disabled  name="fd" >
+        <button type="button" id="toggleBtn" class="btn btn-outline-danger" (click)="toggleClick()">
+            show
+        </button>
+    </div>
+
+        <a routerLink="/update-profile" class="btn btn-success" type="button" style="margin-top: 10px;"> Update </a>
+        <a routerLink="" class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;"> go back </a>
+        <button class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;" (click)="deleteAccount()"> Delete my Account  </button>
+    </form>
+
+</div> 

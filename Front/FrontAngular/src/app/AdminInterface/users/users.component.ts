@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { LoginComponent } from '../login/login.component';
+import { LoginComponent } from '../../login/login.component';
 import { Router } from '@angular/router';
 //import { TestingAPIService } from '../services/newUsers/testing-api.service';
-import { User } from '../models/User.model';
-import { GestionUtilisateurService } from '../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
+import { User } from '../../models/User.model';
+import { GestionUtilisateurService } from '../../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
 
 @Component({
   selector: 'app-users',
@@ -14,7 +14,7 @@ export class UsersComponent {
   listusers! :Array<any>;
 
   users:User[]=[];
-  showPasswordMap = new Map<number,boolean>();
+  showPasswordMap = new Map<number,boolean>(); // i used this so i can toggle all the passwords in the table to show or hide them
 
 
   constructor (private router : Router,private userService : GestionUtilisateurService){};
@@ -25,6 +25,15 @@ export class UsersComponent {
     const currentState = this.showPasswordMap.get(userId) || false;
     this.showPasswordMap.set(userId, !currentState);
   }
+
+
+
+    //navigate to the update form and passing the id for the update : 
+    //hadi bach nhez id li kayn fla ligne w nkhdem bih fl update
+    navigateToUpdate( id : number) : void{
+      this.router.navigate(['/update-profile' ,id]);
+    }
+  
 
 
   
@@ -56,11 +65,6 @@ export class UsersComponent {
 
       })
     }
-
-
-
-
-
   }
 
   loadUsers():void{

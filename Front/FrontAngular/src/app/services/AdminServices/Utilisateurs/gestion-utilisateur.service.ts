@@ -21,9 +21,14 @@ export class GestionUtilisateurService {
    getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users_home`);
   }
-  // updateUser(user:User) : Observable<HttpResponse<string>>{
-  //   return this.http.put(`${this.apiUrl}/update_user/${id}`)
-  // }
+  getUserById(id:number) : Observable<User>{
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
+
+  }
+  updateUser(id:number,user:User) : Observable<HttpResponse<string>>{
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(`${this.apiUrl}/update_user/${id}`,user,{headers,responseType:'text',observe:'response'});
+  }
 
   deleteUser(id:number): Observable<HttpResponse<any>>{
     return this.http.delete<any>(`${this.apiUrl}/delete_user/${id}`);

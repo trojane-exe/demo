@@ -33,7 +33,7 @@
         <td class="column">{{user.adresse}}</td>
         <td class="column">{{user.role}}</td>
         <td class="column">
-            <button class="btn btn-outline-danger" routerLink="/update-profile">
+            <button class="btn btn-outline-danger" (click)="navigateToUpdate(user.idUser)">
                 <i class="bi bi-pencil-square"></i>
             </button>
         </td>

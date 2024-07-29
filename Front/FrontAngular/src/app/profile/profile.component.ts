@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../models/User.model';
 
 
 @Component({
@@ -9,14 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit{
 
-  profile = {
-    id: 0,
-    nom: '',
-    prenom: '',
-    adresse: '',
-    email: '',
-    password: ''
-  };
+  user :User=new User();
 
   constructor(private router : Router){}
 
@@ -54,13 +48,13 @@ export class ProfileComponent implements OnInit{
   }
 
   ngOnInit():void{
-    this.profile={
-      id:1,
-      nom:'elbouazzaoui',
-      prenom: 'soufiane',
-      adresse: '123 Main St',
-      email: 'test@gmail.com',
-      password:'12345'
+    // this.user={
+      // id:1,
+      // nom:'elbouazzaoui',
+      // prenom: 'soufiane',
+      // adresse: '123 Main St',
+      // email: 'test@gmail.com',
+      // password:'12345'
     }
 
 
@@ -73,4 +67,3 @@ export class ProfileComponent implements OnInit{
   
 
 
-}

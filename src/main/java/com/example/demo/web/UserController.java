@@ -34,11 +34,11 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/home2")
-    public ResponseEntity<List<Utilisateur>> getAllUsers(){
-        List<Utilisateur> allusers = us.getAllUsers();
-        return ResponseEntity.ok(allusers);
-    }
+//    @GetMapping("/home2")
+//    public ResponseEntity<List<Utilisateur>> getAllUsers(){
+//        List<Utilisateur> allusers = us.getAllUsers();
+//        return ResponseEntity.ok(allusers);
+//    }
 
     @GetMapping(/*/users_home/*/"/{id}")
     public ResponseEntity<Utilisateur> singleUser(@PathVariable("id") Integer id) {

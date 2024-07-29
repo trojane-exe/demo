@@ -4,14 +4,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileComponent } from './profile/profile.component';
-import { UpdateInfoComponent } from './update-info/update-info.component';
+import { UpdateInfoComponent } from './AdminInterface/update-info/update-info.component';
 import { LoginComponent } from './login/login.component';
-import{ FormsModule} from '@angular/forms';
-import { UsersComponent } from './users/users.component';
-import { AddUserComponent } from './add-user/add-user.component';
+import{ FormsModule,NgForm} from '@angular/forms';
+import { UsersComponent } from './AdminInterface/users/users.component';
+import { AddUserComponent } from './AdminInterface/add-user/add-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,9 +25,13 @@ import { ToastrModule } from 'ngx-toastr';
     AddUserComponent
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     AppRoutingModule,
     FormsModule,
+    
     HttpClientModule
   ],
   providers: [],
