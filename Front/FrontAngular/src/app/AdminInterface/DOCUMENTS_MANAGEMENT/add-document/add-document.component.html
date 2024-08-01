@@ -1,0 +1,38 @@
+<div class="container col-md-6 offset-md-3">
+    <h3 style="text-align: center;">Add new document</h3>
+    <form (ngSubmit)="addDoc(addDocForm)" #addDocForm="ngForm" novalidate autocomplete="off">
+
+        <div class="form-group">
+            <input type="text" name="idDoc" id="Iduser" disabled hidden>
+            <label style="margin-bottom: 10px">Titre</label>
+            <input type="text" required #titre="ngModel" id="titre" name="titre" [class.is-invalid]="titre.invalid && titre.touched" 
+            class="form-control" [(ngModel)]="document.titre" autocomplete="off">
+            <small [class.d-none]="titre.valid || titre.untouched" class="text-danger">titre is required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="auteur" class="form-label">Auteur</label>
+            <input type="text" class="form-control" required #auteur="ngModel" [class.is-invalid]="auteur.invalid && auteur.touched" 
+            [(ngModel)]="document.auteur" name="auteur" autocomplete="off">
+            <small [class.d-none]="auteur.valid || auteur.untouched" class="text-danger">auteur is required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="form-label">Date d'écriture</label>
+            <input type="date" class="form-control" id="releasedate" [(ngModel)]="document.date_ecriture" name="date" 
+            required #date="ngModel" [class.is-invalid]="date.invalid && date.touched" autocomplete="off">
+            <small [class.d-none]="date.valid || date.untouched" class="text-danger">Date is requiered</small>
+        </div>
+
+        <div class="form-group">
+            <label for="adress" class="form-label">Stock</label>
+            <input type="number" class="form-control" id="stock" [(ngModel)]="document.stock" name="adresse" autocomplete="off">
+        </div>
+
+
+        <div>
+        <button class="btn btn-success"  style="margin-top: 10px;" type="submit">Save</button>
+        <a  routerLink="/documents" class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;">Go back</a>
+    </div>
+    </form>
+</div>

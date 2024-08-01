@@ -1,7 +1,7 @@
 import { Component, AfterViewInit,OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../../models/User.model';
-import { GestionUtilisateurService } from '../../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
+import { User } from '../../../models/User.model';
+import { GestionUtilisateurService } from '../../../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
 import { NgForm, NgModel } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 @Component({
@@ -42,7 +42,7 @@ export class UpdateInfoComponent implements OnInit{
     const pass = (document.getElementById('passwordId')as HTMLInputElement).value;
     const confirm = (document.getElementById('passwordIdConfirm') as HTMLInputElement).value;
     if(form.invalid){
-      this.errormessage = 'please fill all the required fields';
+      this.errormessage = 'please fill all the required fields or respect the required form';
       return;
     }
     else{
@@ -53,10 +53,10 @@ export class UpdateInfoComponent implements OnInit{
       this.userService.updateUser(this.id,this.user).subscribe({
       next: () => {
         this.router.navigate(['/users']);
-        this.toastService.success('User added successfully!', 'Success!', {
+        this.toastService.success('User added successfully!', 'UPDATE', {
           timeOut: 3000,
           toastClass: 'alert alert-success',
-          positionClass:'top-right'
+          positionClass:'toast-top-right'
         });
         
       },

@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../models/User.model';
-import { TestingAPIService } from '../../services/newUsers/testing-api.service';
+import { Component, OnInit  } from '@angular/core';
+import { User } from '../../../models/User.model';
 import { Router } from '@angular/router';
-import { GestionUtilisateurService } from '../../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
-import { compileFactoryFunction } from '@angular/compiler';
+import { GestionUtilisateurService } from '../../../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-user',
@@ -12,6 +11,7 @@ import { NgForm } from '@angular/forms';
   styleUrl: './add-user.component.css'
 })
 export class AddUserComponent implements OnInit{
+  
 
 
   errormessage! : string;
@@ -19,7 +19,7 @@ export class AddUserComponent implements OnInit{
   passwordsMatch = true;
   user: User = new User();
   roles : string[]=['Admin','User'];
-  constructor(private router:Router,private userService : GestionUtilisateurService){}
+  constructor(private router:Router,private userService : GestionUtilisateurService,private toast : ToastrService){}
   ngOnInit(): void {
     
   }
@@ -45,7 +45,8 @@ export class AddUserComponent implements OnInit{
       else{
       this.userService.addUser(this.user).subscribe({
       next: () => {
-        console.log('Utilisateur ajouté avec succès !');
+        this.toast.success("User added successfully",'INSERT');
+        this.router.navigate(['/users']);
         
       },
       error: (err) => {

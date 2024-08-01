@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
-import { UpdateInfoComponent } from './AdminInterface/update-info/update-info.component';
+import { UpdateInfoComponent } from './AdminInterface/USER_MANAGEMENT/update-info/update-info.component';
 import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
-import { UsersComponent } from './AdminInterface/users/users.component';
-import { AddUserComponent } from './AdminInterface/add-user/add-user.component';
+import { UsersComponent } from './AdminInterface/USER_MANAGEMENT/users/users.component';
+import { AddUserComponent } from './AdminInterface/USER_MANAGEMENT/add-user/add-user.component';
+import { DocumentsComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/documents/documents.component';
+import { AddDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/add-document/add-document.component';
 
 const routes: Routes = [
 
@@ -26,6 +28,14 @@ const routes: Routes = [
   {
     path:'add-user',
     component:AddUserComponent
+  },
+  {
+    path : 'documents',
+    component:DocumentsComponent
+  },
+  {
+    path :'add-document',
+    component : AddDocumentComponent
   }
 
 ];
