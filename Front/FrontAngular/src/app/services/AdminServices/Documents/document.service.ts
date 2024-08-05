@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpResponse,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Document } from '../../../models/Document.model';
-import { ReturnStatement } from '@angular/compiler';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +18,15 @@ export class DocumentService {
   addDoc(document : Document):Observable<HttpResponse<string>>{
     const headers = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(`${this.apiUrl}/add_doc` , document , {headers , responseType : 'text' ,observe : 'response'});
+  }
+  updateDoc(id : number , document : Document) : Observable<HttpResponse<string>>{
+    const headers = new HttpHeaders({'Content-Type':'application/json'});
+    return this.http.put(`${this.apiUrl}/update_doc/${id}`,document,{headers,responseType:'text',observe:'response'});
+  }
+  getDocById(id:number) : Observable<Document>{
+    return this.http.get<Document>(`${this.apiUrl}/${id}`);
+  }
+  deleteDoc(id:number) : Observable<HttpResponse<any>>{
+    return this.http.delete<any>(`${this.apiUrl}/delete_doc/${id}`);
   }
 }

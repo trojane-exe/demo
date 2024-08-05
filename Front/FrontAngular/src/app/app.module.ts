@@ -16,6 +16,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NavbarAdminComponent } from './navbar-admin/navbar-admin.component';
 import { DocumentsComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/documents/documents.component';
 import { AddDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/add-document/add-document.component';
+import { BookDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/book-document/book-document.component';
+import { UpdateDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/update-document/update-document.component';
+import { ReservationsComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/reservations/reservations.component';
+import { UpdateReservationComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/update-reservation/update-reservation.component';
+import { AddReservationComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/add-reservation/add-reservation.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +33,12 @@ import { AddDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/add-
     AddUserComponent,
     NavbarAdminComponent,
     DocumentsComponent,
-    AddDocumentComponent
+    AddDocumentComponent,
+    BookDocumentComponent,
+    UpdateDocumentComponent,
+    ReservationsComponent,
+    UpdateReservationComponent,
+    AddReservationComponent
   ],
   imports: [
     ReactiveFormsModule,

@@ -58,6 +58,12 @@ public class UserController {
         return "add_user";
     }
 
+    @GetMapping("/allID")
+    public ResponseEntity<List<Object[]>> getAllId(){
+        List<Object[]> id = us.getAllId();
+        return ResponseEntity.ok(id);
+    }
+
 
     @PostMapping("/add_user")
     public ResponseEntity<?> addUser(@Validated @RequestBody UtilisateurDTO user) {

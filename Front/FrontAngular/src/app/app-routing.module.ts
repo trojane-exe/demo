@@ -8,6 +8,9 @@ import { UsersComponent } from './AdminInterface/USER_MANAGEMENT/users/users.com
 import { AddUserComponent } from './AdminInterface/USER_MANAGEMENT/add-user/add-user.component';
 import { DocumentsComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/documents/documents.component';
 import { AddDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/add-document/add-document.component';
+import { BookDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/book-document/book-document.component';
+import { UpdateDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/update-document/update-document.component';
+import { ReservationsComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/reservations/reservations.component';
 
 const routes: Routes = [
 
@@ -36,6 +39,19 @@ const routes: Routes = [
   {
     path :'add-document',
     component : AddDocumentComponent
+  }
+  ,
+  {
+    path : 'reserve-doc/:id',
+    component : BookDocumentComponent
+  },
+  {
+    path : 'update-doc/:id',
+    component : UpdateDocumentComponent
+  },
+  {
+    path : 'reservations',
+    component : ReservationsComponent
   }
 
 ];

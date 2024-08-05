@@ -12,7 +12,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 @RestController
@@ -50,7 +52,7 @@ public class DocumentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add this document");
         }
     }
-    @PostMapping("/update_doc/{id}")
+    @PutMapping("/update_doc/{id}")
     public ResponseEntity<?> updateDoc(@PathVariable("id") Integer iddoc ,@Validated @RequestBody Document newdoc){
         try{
             ds.modifierDocument(iddoc,newdoc);
@@ -60,14 +62,11 @@ public class DocumentController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PostMapping("/delete_doc/{id}")
-    public ResponseEntity<?> deleteDoc(@PathVariable("id") Integer id){
-            String resultats = ds.supprimerDocument(id);
-            if(resultats==null){
-            return ResponseEntity.ok("deleted successfully");
-        }
-        else{
-            return ResponseEntity.badRequest().body("error while deleting");
-        }
-    }
+    @DeleteMapping("/delete_doc/{id}")
+    public ResponseEntity<Map<String,String>> deleteDoc(@PathVariable("id") Integer id){
+            ds.supprimerDocument(id);
+        Map<String,String> reponse = new HashMap<>();
+        reponse.put("message","delete success");
+        return ResponseEntity.ok(reponse);}
+
 }

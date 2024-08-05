@@ -15,5 +15,7 @@ public interface IUtilisateurService {
     public List<UtilisateurDTO> listUsers();
     public void deleteAll();
     public List<Utilisateur> getAllUsers();
+    public List<Object[]> getAllId();
+
 
 }

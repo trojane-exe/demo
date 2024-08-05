@@ -90,7 +90,12 @@ public class IReservationImpl implements IReservationService {
             }
             if(dto.getIdDoc()!=null){
                 Document doc = dr.findById(dto.getIdDoc()).orElseThrow(()-> new RuntimeException("not found"));
-                oldRes.setDocument(doc);
+                if(doc.getStock()==0){
+                    return "out of stock";
+                }
+                else {
+                    oldRes.setDocument(doc);
+                }
             }
             if(dto.getDate_reservation()!=null){
                 oldRes.setDate_reservation(dto.getDate_reservation());

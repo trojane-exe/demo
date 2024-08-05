@@ -6,6 +6,7 @@ import com.example.demo.entities.Utilisateur;
 import com.example.demo.repository.UtilisateurRepository;
 import com.example.demo.services.Interface.IUtilisateurService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,4 +147,10 @@ public class IUtilisateurImpl implements IUtilisateurService {
     public List<Utilisateur> getAllUsers(){
         return ur.findAll();
     }
+
+    public List<Object[]> getAllId(){
+        List<Object[]> ids = ur.getAllId();
+        return ids;
+    }
 }
+
