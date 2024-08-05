@@ -14,24 +14,29 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let d of docs">
-        <th >{{d.idDoc}}</th>
-        <td class="column">{{d.titre}}</td>
-        <td class="column">{{d.auteur}}</td>
-        <td class="column">{{d.date_ecriture}}</td>
+      <tr *ngFor="let reservation of reservations">
+        <th >{{reservation.idReservation}}</th>
+        <td class="column">{{reservation.idDoc}}</td>
+        <td class="column">{{reservation.idUser}}</td>
+        <td class="column">{{reservation.date_reservation}}</td>
 
-        <td class="column">{{d.stock}}</td>
         <td class="column">
-          <button class="btn btn-outline-danger" (click)="navigateToBooking(d.idDoc)">
+          <button *ngIf="reservation.isActive"
+          type="button" class="btn btn-success" data-bs-toggle="button" >actif</button>
+          <button *ngIf="!reservation.isActive"
+          type="button" class="btn btn-danger" data-bs-toggle="button" >inactif</button>
+        </td>
+        <td class="column">
+          <button class="btn btn-outline-danger" >
             <i class="bi bi-calendar"></i>
           </button>
         <td class="column">
-            <button class="btn btn-outline-danger" (click)="navigateToUpdate(d.idDoc)">
+            <button class="btn btn-outline-danger" >
                 <i class="bi bi-pencil-square"></i>
             </button>
         </td>
         <td class="column">
-        <button class="btn btn-outline-danger" (click)="deleteDoc(d.idDoc)">
+        <button class="btn btn-outline-danger" >
             <i class="bi bi-trash"></i>
         </button>
     </td>
