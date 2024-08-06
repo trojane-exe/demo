@@ -41,8 +41,8 @@ public class UserController {
 //    }
 
     @GetMapping(/*/users_home/*/"/{id}")
-    public ResponseEntity<Utilisateur> singleUser(@PathVariable("id") Integer id) {
-        Utilisateur user = us.rechercherUser(id);
+    public ResponseEntity<UtilisateurDTO> singleUser(@PathVariable("id") Integer id) {
+        UtilisateurDTO user = us.rechercherUser(id);
         if (user != null) {
             return ResponseEntity.ok(user);
         }
@@ -58,11 +58,6 @@ public class UserController {
         return "add_user";
     }
 
-    @GetMapping("/allID")
-    public ResponseEntity<List<Object[]>> getAllId(){
-        List<Object[]> id = us.getAllId();
-        return ResponseEntity.ok(id);
-    }
 
 
     @PostMapping("/add_user")
@@ -76,6 +71,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/bookingId")
+    public ResponseEntity<List<Object>> getBookingInfo(){
+        List<Object> users = us.getAllId();
+        return ResponseEntity.ok(users);
+    }
     @PutMapping("/update_user/{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") Integer id,@Validated @RequestBody Utilisateur user){
         try{

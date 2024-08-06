@@ -1,7 +1,7 @@
 export class User{
     idUser!: number;
-    nom : string|null| undefined;
-    prenom :string|null| undefined;
+    nom! : string;
+    prenom! :string;
     adresse :string|null| undefined;
     email :string|null| undefined;
     password :string|null| undefined;

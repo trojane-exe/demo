@@ -97,9 +97,9 @@ public class IReservationImpl implements IReservationService {
                     oldRes.setDocument(doc);
                 }
             }
-            if(dto.getDate_reservation()!=null){
-                oldRes.setDate_reservation(dto.getDate_reservation());
-            }
+
+                oldRes.setDate_reservation(oldRes.getDate_reservation());
+
             rr.save(oldRes);
         }
         else{

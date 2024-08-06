@@ -16,6 +16,9 @@ export class ReservationsComponent implements OnInit {
   reservations : Reservation[]=[];
   constructor(private router :Router,private toast:ToastrService, private reservationService : ReservationService){}
 
+  displayToast():void{
+    this.toast.info("choose a valid document from the list and click on the booking icon")
+  }
   getAllReservation():void{
     var button = document.getElementById('toggleStatus');
     this.reservationService.getAllReservation().subscribe({
@@ -25,6 +28,9 @@ export class ReservationsComponent implements OnInit {
       }
     })
 
+  }
+  navigateToUpdate(id:number):void{
+  this.router.navigate(['/update-reservation',id]);
   }
 
   ngOnInit(): void {

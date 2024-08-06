@@ -52,7 +52,7 @@ public class ReservationController {
             return ResponseEntity.badRequest().body(resultat) ;
         }
     }
-    @PostMapping("/update_res/{id}")
+    @PutMapping("/update_res/{id}")
     public ResponseEntity<?>updateReservation(@PathVariable("id") Integer id,@Validated @RequestBody ReservationDTO dto){
 
         String resultat = rs.modifierReservation(id,dto);
@@ -64,7 +64,7 @@ public class ReservationController {
             return ResponseEntity.badRequest().body(resultat);
         }
     }
-    @PostMapping("/delete_res/{id}")
+    @DeleteMapping("/delete_res/{id}")
     public String deleteReservation(@PathVariable("id") Integer id){
         try {
             rs.supprimerReservation(id);

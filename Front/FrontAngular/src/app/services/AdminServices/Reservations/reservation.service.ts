@@ -31,5 +31,8 @@ export class ReservationService {
   deleteReservation(id:number):Observable<HttpResponse<any>>{
     return this.http.delete<any>(`${this.apiUrl}/delete_res/${id}`);
   }
+  getReservationById(id:number):Observable<Reservation[]>{
+    return this.http.get<Reservation[]>(`${this.apiUrl}/${id}`);
+  }
   
 }

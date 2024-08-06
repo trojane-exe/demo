@@ -1,6 +1,7 @@
 package com.example.demo.web;
 
 
+import com.example.demo.dto.DocumentDTO;
 import com.example.demo.entities.Document;
 import com.example.demo.repository.DocumentRepository;
 import com.example.demo.services.Interface.IDocumentService;
@@ -28,13 +29,19 @@ public class DocumentController {
         this.ds = documentService;
     }
     @GetMapping("/doc_home")
-    public ResponseEntity<List<Document>> AllDoc(){
-        List<Document> docs = ds.listDocument();
+    public ResponseEntity<List<DocumentDTO>> AllDoc(){
+        List<DocumentDTO> docs = ds.listDocument();
+        return ResponseEntity.ok(docs);
+    }
+
+    @GetMapping("/actifDoc")
+    public ResponseEntity<List<Object>> getActifDocs(){
+        List<Object> docs = ds.getActifDocs();
         return ResponseEntity.ok(docs);
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> singledoc(@PathVariable("id") Integer id){
-        Document doc = ds.rechercherDocument(id);
+        DocumentDTO doc = ds.rechercherDocument(id);
         if(doc != null){
             return ResponseEntity.ok(doc);
         }

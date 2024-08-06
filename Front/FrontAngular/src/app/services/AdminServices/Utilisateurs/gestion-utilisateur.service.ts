@@ -33,4 +33,7 @@ export class GestionUtilisateurService {
   deleteUser(id:number): Observable<HttpResponse<any>>{
     return this.http.delete<any>(`${this.apiUrl}/delete_user/${id}`);
   }
+  getInfoForBooking():Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/bookingId`);
+  }
 }

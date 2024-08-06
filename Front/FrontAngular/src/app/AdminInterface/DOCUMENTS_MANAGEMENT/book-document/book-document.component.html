@@ -1,1 +1,15 @@
-<h1 class="bg-danger"> I will handle the reservation here using reservation service and transfer the book id when clicking on the booking icon , also i will display a drop down menu that contain the id of all users in the database</h1>
+<h2>to proceed please select the user for this reservation from the list bellow</h2>
+<div class="container col-md-6 offset-md-3">
+<form >
+<div class="form-group" >
+    <label for="role" class="form-label">Choose the user</label>
+    <select class="form-select" id="identifiant">
+        <option *ngFor="let u of user" [value]="u[0]" >{{u[0]}} : {{ u[1] }} {{ u[2] }}</option>
+      </select>
+</div>
+<div class="d-flex justify-content-center" style="margin-top: 10px;">
+    <button class="btn btn-success" (click)="confirmBooking()">proceed</button>
+</div>
+
+</form>
+</div>

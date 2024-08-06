@@ -75,9 +75,7 @@ export class UpdateInfoComponent implements OnInit{
       next : (data : User)=>{
         this.user = data
         this.confirmfield = this.user.password;
-        if(this.user.adresse==null){
-          //this.user.adresse='undefined';
-        }
+
         
       },
       error :(err)=>{

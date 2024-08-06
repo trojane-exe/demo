@@ -23,8 +23,13 @@
 
         <td class="column">{{d.stock}}</td>
         <td class="column">
-          <button class="btn btn-outline-danger" (click)="navigateToBooking(d.idDoc)">
+          <button *ngIf ="d.stock >0" class="btn btn-outline-danger" (click)="navigateToBooking(d.idDoc)" >
             <i class="bi bi-calendar"></i>
+
+          </button>
+          <button *ngIf ="d.stock==0" class="btn btn-outline-danger" (click)="navigateToBooking(d.idDoc)" disabled>
+            <i class="bi bi-calendar"></i>
+
           </button>
         <td class="column">
             <button class="btn btn-outline-danger" (click)="navigateToUpdate(d.idDoc)">

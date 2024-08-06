@@ -6,13 +6,10 @@ import com.example.demo.entities.Utilisateur;
 import com.example.demo.repository.UtilisateurRepository;
 import com.example.demo.services.Interface.IUtilisateurService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.Role;
-import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -127,9 +124,11 @@ public class IUtilisateurImpl implements IUtilisateurService {
     }
 
     @Override
-    public Utilisateur rechercherUser(Integer id) {
+    public UtilisateurDTO rechercherUser(Integer id) {
         Optional<Utilisateur> userInfo = ur.findById(id);
-        return userInfo.orElse(null);
+        Utilisateur utilisateur = userInfo.get();
+
+        return toDto(utilisateur);
     }
 
     @Override
@@ -148,9 +147,8 @@ public class IUtilisateurImpl implements IUtilisateurService {
         return ur.findAll();
     }
 
-    public List<Object[]> getAllId(){
-        List<Object[]> ids = ur.getAllId();
-        return ids;
+    public List<Object> getAllId(){
+        return ur.getAllId();
     }
 }
 

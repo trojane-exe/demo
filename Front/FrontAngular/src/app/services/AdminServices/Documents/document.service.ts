@@ -29,4 +29,7 @@ export class DocumentService {
   deleteDoc(id:number) : Observable<HttpResponse<any>>{
     return this.http.delete<any>(`${this.apiUrl}/delete_doc/${id}`);
   }
+  getActifDocs():Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/actifDoc`);
+  }
 }

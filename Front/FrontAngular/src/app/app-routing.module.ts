@@ -11,6 +11,7 @@ import { AddDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/add-
 import { BookDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/book-document/book-document.component';
 import { UpdateDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/update-document/update-document.component';
 import { ReservationsComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/reservations/reservations.component';
+import { UpdateReservationComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/update-reservation/update-reservation.component';
 
 const routes: Routes = [
 
@@ -52,6 +53,10 @@ const routes: Routes = [
   {
     path : 'reservations',
     component : ReservationsComponent
+  },
+  {
+    path : 'update-reservation/:id',
+    component : UpdateReservationComponent
   }
 
 ];

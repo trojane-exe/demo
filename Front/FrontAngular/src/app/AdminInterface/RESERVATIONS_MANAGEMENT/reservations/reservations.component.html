@@ -1,5 +1,5 @@
 
-<a routerLink="/add-document" class="btn btn-info"> add a new reservation</a>
+<a routerLink="/documents" class="btn btn-info" (click)="displayToast()"> add a new reservation</a>
 <table class="table">
     <thead>
       <tr>
@@ -26,14 +26,14 @@
           <button *ngIf="!reservation.isActive"
           type="button" class="btn btn-danger" data-bs-toggle="button" >inactif</button>
         </td>
+
         <td class="column">
-          <button class="btn btn-outline-danger" >
-            <i class="bi bi-calendar"></i>
-          </button>
-        <td class="column">
-            <button class="btn btn-outline-danger" >
+            <button *ngIf="reservation.isActive" class="btn btn-outline-danger" (click)="navigateToUpdate(reservation.idReservation)" >
                 <i class="bi bi-pencil-square"></i>
             </button>
+            <button *ngIf="!reservation.isActive" class="btn btn-outline-danger" disabled >
+              <i class="bi bi-pencil-square"></i>
+          </button>
         </td>
         <td class="column">
         <button class="btn btn-outline-danger" >

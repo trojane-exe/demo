@@ -1,1 +1,24 @@
-<p>update-reservation works!</p>
+
+    <h3>correct the document or the user to proceed</h3>
+
+
+
+<div class="form-container" style="display: flex;">
+    
+    <div class="left-form" style="flex: 1;margin-right: 10px;">
+        <label for="role" class="form-label">Choose the user</label>
+        <select class="form-select" id="identifiantuser" [(ngModel)]="selectedUserId" name="user">
+            <option *ngFor="let u of user" [value]="u[0]" >{{u[0]}} : {{ u[1] }} {{ u[2] }}</option>
+            </select>
+    </div>
+    <div class="right-form" style="flex: 1;">
+        <label for="role" class="form-label">Choose the document</label>
+        <select class="form-select" id="identifiantdoc" [(ngModel)]="selectedDocId" name="doc">
+            <option *ngFor="let d of doc" [value]="d[0]" >{{d[0]}} : {{ d[1] }}</option>
+            </select>
+    </div>
+
+  </div>
+  <div style="text-align: center; margin-top: 10px;">
+    <button class="btn btn-success" type="submit" (click)="confirmUpdate()" >proceed</button>
+</div>

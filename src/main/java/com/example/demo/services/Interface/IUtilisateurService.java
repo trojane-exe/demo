@@ -11,11 +11,11 @@ public interface IUtilisateurService {
     public void ajouterUser(UtilisateurDTO utilisateur);
     public void modifierUser(int id ,Utilisateur utilisateur);
     public void supprimerUser(Integer id);
-    public Utilisateur rechercherUser(Integer id); //rechercher un seul utilisteur
+    public UtilisateurDTO rechercherUser(Integer id); //rechercher un seul utilisteur
     public List<UtilisateurDTO> listUsers();
     public void deleteAll();
     public List<Utilisateur> getAllUsers();
-    public List<Object[]> getAllId();
+    public List<Object> getAllId();
 
 
 }
