@@ -111,6 +111,9 @@ public class IReservationImpl implements IReservationService {
     public String annulerReservation(int id){
         Reservation reservation = rr.findById(id).orElse(null);
         if(reservation!=null){
+            Document doc = dr.findById(reservation.getDocument().getIdDoc()).orElse(null);
+            doc.setStock(doc.getStock()+1);
+            dr.save(doc);
             reservation.setIsActive(false);
             rr.save(reservation);
 
@@ -124,6 +127,10 @@ public class IReservationImpl implements IReservationService {
 
         if(res!=null){
             rr.deleteById(id);
+
+            Document doc = dr.findById(res.getDocument().getIdDoc()).orElse(null);
+            doc.setStock(doc.getStock()+1);
+            dr.save(doc);
         }
         else{
             return "error occured while deleting";

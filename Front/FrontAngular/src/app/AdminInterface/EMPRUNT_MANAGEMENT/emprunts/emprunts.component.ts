@@ -24,6 +24,18 @@ export class EmpruntsComponent implements OnInit{
     })
   }
 
+  deleteEmprunt(id:number):void{
+    const dialog = confirm("are you sure you want to delete this emprunt!");
+    if(dialog){
+      this.empruntService.deleteEmprunt(id).subscribe({
+        next:()=>{
+          this.toast.warning("Deleted successfully","DELETE");
+          this.emprunts = this.emprunts.filter(emp =>emp.idEmp !==id );
+        }
+      })
+    }
+  }
+
   ngOnInit(): void {
     this.getAllEmprunt();
     

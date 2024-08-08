@@ -12,7 +12,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @RestController
@@ -51,7 +53,7 @@ public class EmpruntController {
             return ResponseEntity.badRequest().body(resultat);
         }
     }
-    @PostMapping("/update_emprunt/user/{id}")
+    @PutMapping("/update_emprunt/user/{id}")
     public ResponseEntity<?> modifierEmprunt(@PathVariable("id") Integer id , @Validated @RequestBody EmpruntDTO dto){
         String resultat = es.modifierEmpruntUser(id,dto);
         if(resultat == null){
@@ -62,14 +64,11 @@ public class EmpruntController {
         }
     }
 
-    @PostMapping("delete_emprunt/{id}")
-    public ResponseEntity<?>supprimerEmprunt(@PathVariable("id")Integer id){
-        String resultat = es.supprimerEmprunt(id);
-        if(resultat==null){
-            return ResponseEntity.ok("deleted successfully");
-        }
-        else{
-            return ResponseEntity.badRequest().body(resultat);
-        }
+    @DeleteMapping("delete_emprunt/{id}")
+    public ResponseEntity<Map<String,String>>supprimerEmprunt(@PathVariable("id")Integer id){
+        es.supprimerEmprunt(id);
+        Map<String,String> response = new HashMap<>();
+        response.put("message","Deleted successfully");
+        return ResponseEntity.ok(response);
     }
 }

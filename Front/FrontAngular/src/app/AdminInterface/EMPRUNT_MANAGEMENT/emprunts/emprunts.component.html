@@ -57,13 +57,13 @@
         </button>
         </td>
         <td class="column">
-        <button class="btn btn-outline-danger" >
+        <button class="btn btn-outline-danger" (click)="deleteEmprunt(emprunt.idEmp)">
             <i class="bi bi-trash"></i>
         </button>
     </td>
 
     <td class="column">
-        <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger"  >
+        <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger" >
             <i class="bi bi-x-lg"></i>
         </button>
         <button *ngIf="emprunt.status==status.Annul" class="btn btn-outline-danger" disabled >

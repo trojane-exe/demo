@@ -24,5 +24,9 @@ export class EmpruntService {
     return this.http.post(`${this.apiUrl}/add_emprunt`,emprunt,{headers,responseType:'text',observe:'response'});
   }
 
+  deleteEmprunt(id:number):Observable<HttpResponse<any>>{
+    return this.http.delete<any>  (`${this.apiUrl}/delete_emprunt/${id}`)
+  }
+
   
 }
