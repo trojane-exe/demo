@@ -3,13 +3,17 @@ package com.example.demo.web;
 import com.example.demo.dto.ReservationDTO;
 import com.example.demo.services.Interface.IReservationService;
 import lombok.Data;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.ReactiveOffsetScrollPositionHandlerMethodArgumentResolver;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @RestController
@@ -64,15 +68,22 @@ public class ReservationController {
             return ResponseEntity.badRequest().body(resultat);
         }
     }
+    @PutMapping("cancel/{id}")
+    public ResponseEntity<?>cancelReservation(@PathVariable("id") Integer id){
+        String resultat = rs.annulerReservation(id);
+        if(resultat==null){
+            return ResponseEntity.ok(resultat);
+        }
+        else{
+            return ResponseEntity.badRequest().body("error");
+        }
+    }
     @DeleteMapping("/delete_res/{id}")
-    public String deleteReservation(@PathVariable("id") Integer id){
-        try {
-            rs.supprimerReservation(id);
-            return "deleted successfully";
-        }
-        catch (Exception e){
-            return "error occured" + e.getMessage();
-        }
+    public ResponseEntity<Map<String,String>> deleteReservation(@PathVariable("id") Integer id){
+        rs.supprimerReservation(id);
+        Map<String,String> reponse = new HashMap<>();
+        reponse.put("message","deleted");
+        return ResponseEntity.ok(reponse);
     }
     
 }

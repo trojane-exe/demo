@@ -10,6 +10,8 @@
         <th scope="col">etat</th>
         <th scope="col">update</th>
         <th scope="col">delete</th>
+        <th scope="col">cancel</th>
+        <th scope="col">emprunt</th>
 
       </tr>
     </thead>
@@ -36,10 +38,26 @@
           </button>
         </td>
         <td class="column">
-        <button class="btn btn-outline-danger" >
+        <button class="btn btn-outline-danger" (click)="deleteReservation(reservation.idReservation)">
             <i class="bi bi-trash"></i>
         </button>
     </td>
+    <td class="column">
+      <button *ngIf="reservation.isActive" class="btn btn-outline-danger" (click)="cancelReservation(reservation.idReservation)">
+          <i class="bi bi-x-lg"></i>
+      </button>
+      <button *ngIf="!reservation.isActive" disabled class="btn btn-outline-danger" (click)="cancelReservation(reservation.idReservation)">
+        <i class="bi bi-x-lg"></i>
+    </button>
+  </td>
+  <td class="column">
+    <button class="btn btn-outline-danger" *ngIf="reservation.isActive" (click)="navigateToEmprunt(reservation.idReservation)">
+      <i class="bi bi-bookmark-check-fill"></i>
+    </button>
+    <button class="btn btn-outline-danger" *ngIf="!reservation.isActive" disabled (click)="navigateToEmprunt(reservation.idReservation)">
+      <i class="bi bi-bookmark-check-fill"></i>
+    </button>
+</td>
       </tr>
       
     </tbody>

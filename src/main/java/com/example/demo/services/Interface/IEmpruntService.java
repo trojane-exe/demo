@@ -13,7 +13,7 @@ public interface IEmpruntService {
     public List<EmpruntDTO> listerEmprunt();
     //public List<Emprunt> allEmprunts();
     public void retard();
-    public String annulerReservation(EmpruntDTO dto);
+    public String annulerEmprunt(EmpruntDTO dto);
 
     public List<EmpruntDTO> findEmpruntsByUserId(Integer id );
 }

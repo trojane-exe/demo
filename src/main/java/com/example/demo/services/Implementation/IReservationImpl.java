@@ -107,6 +107,16 @@ public class IReservationImpl implements IReservationService {
         }
         return null;
     }
+    @Override
+    public String annulerReservation(int id){
+        Reservation reservation = rr.findById(id).orElse(null);
+        if(reservation!=null){
+            reservation.setIsActive(false);
+            rr.save(reservation);
+
+        }
+        return null;
+    }
 
     @Override
     public String supprimerReservation(int id) {

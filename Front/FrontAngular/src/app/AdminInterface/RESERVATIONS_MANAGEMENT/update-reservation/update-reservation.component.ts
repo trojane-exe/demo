@@ -68,6 +68,7 @@ export class UpdateReservationComponent implements OnInit {
       this.reservationService.updateReservation(this.id,this.reservation).subscribe({
         next:()=>{
           this.toast.success("Reservation info updated successfully",'UPDATE');
+          this.router.navigate(['/reservations']);
         },
         error : (err)=>{this.toast.error(err)}
       })

@@ -25,7 +25,7 @@ public class EmpruntController {
 
     @GetMapping("/home")
     public List<EmpruntDTO> myEmprunts( ){
-        return es.findEmpruntsByUserId(2);
+        return es.listerEmprunt();
     }
 
 
@@ -33,7 +33,7 @@ public class EmpruntController {
 
     @PostMapping("/cancel")
     public ResponseEntity<?> cancel(@Validated @RequestBody EmpruntDTO emprunt){
-        String result = es.annulerReservation(emprunt);
+        String result = es.annulerEmprunt(emprunt);
         if(result==null){
             return ResponseEntity.ok(result);
         }

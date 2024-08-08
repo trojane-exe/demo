@@ -28,6 +28,13 @@ export class ReservationService {
     return this.http.put(`${this.apiUrl}/update_res/${id}`,reservation,{headers,responseType:'text',observe:'response'});
   }
 
+  cancelReservation(id:number):Observable<any>{
+    const headers = new HttpHeaders({'ContentType':'application/json'});
+    return this.http.put(`${this.apiUrl}/cancel/${id}`,{headers,responseType:'text',observe:'response'})
+    
+  }
+
+
   deleteReservation(id:number):Observable<HttpResponse<any>>{
     return this.http.delete<any>(`${this.apiUrl}/delete_res/${id}`);
   }

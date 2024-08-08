@@ -11,6 +11,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -162,7 +163,7 @@ public class IEmpruntImpl implements IEmpruntService {
     }
 
     @Override
-    public String annulerReservation(EmpruntDTO dto){
+    public String annulerEmprunt(EmpruntDTO dto){
         Reservation reservation = rr.findById(dto.getIdRes()).orElse(null);
         if(reservation.getIsActive()) {
             Emprunt emprunt = toEntity(dto);
@@ -294,8 +295,9 @@ public class IEmpruntImpl implements IEmpruntService {
             }
         }
     }
-    @PostConstruct
-    public void onAppLoad(){
+
+    @Scheduled(cron ="0 0 0 * * ?")
+    public void scheduledTask() {
         retard();
     }
 }

@@ -12,6 +12,9 @@ import { BookDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/boo
 import { UpdateDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/update-document/update-document.component';
 import { ReservationsComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/reservations/reservations.component';
 import { UpdateReservationComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/update-reservation/update-reservation.component';
+import { EmpruntsComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/emprunts/emprunts.component';
+import { ValidateEmpruntComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/validate-emprunt/validate-emprunt.component';
+
 
 const routes: Routes = [
 
@@ -57,6 +60,14 @@ const routes: Routes = [
   {
     path : 'update-reservation/:id',
     component : UpdateReservationComponent
+  },
+  {
+    path : 'emprunts',
+    component : EmpruntsComponent
+  },
+  {
+    path:'add-emprunt/:id',
+    component : ValidateEmpruntComponent
   }
 
 ];

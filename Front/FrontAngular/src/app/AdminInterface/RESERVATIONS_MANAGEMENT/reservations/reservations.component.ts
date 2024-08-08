@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ReservationService } from '../../../services/AdminServices/Reservations/reservation.service';
 import { __importDefault } from 'tslib';
 import { Observable } from 'rxjs';
+import { NodeCompatibleEventEmitter } from 'rxjs/internal/observable/fromEvent';
 
 @Component({
   selector: 'app-reservations',
@@ -32,6 +33,43 @@ export class ReservationsComponent implements OnInit {
   navigateToUpdate(id:number):void{
   this.router.navigate(['/update-reservation',id]);
   }
+
+
+
+  navigateToEmprunt(id:number):void{
+
+    this.router.navigate(['add-emprunt',id]);
+  }
+
+
+
+  cancelReservation(id: number): void {
+    const dialog = confirm("Are you sure you want to cancel this reservation ? \n it wont be available anymore!!");
+    if(dialog){
+    this.reservationService.cancelReservation(id).subscribe({
+      next: () => {
+        this.toast.success("Canceled");
+        this.getAllReservation();
+      }
+    });
+  }
+  }
+
+  deleteReservation(id:number):void{
+    const dialog=confirm("are you sure you want to delete this reservation!!");
+    if(dialog){
+    this.reservationService.deleteReservation(id).subscribe({
+      next:()=>{
+        //this.reservations = this.reservations.filter(this.reservations => this.reservations.idReservation !==id);
+      this.reservations = this.reservations.filter(res =>res.idReservation !==id);
+      this.toast.warning("Deleted","DELETE");
+    },
+    error:(err)=>{
+      this.toast.error(err);
+    }
+    })
+  }
+}
 
   ngOnInit(): void {
     this.getAllReservation();

@@ -1,0 +1,31 @@
+<div class="container col-md-6 offset-md-3">
+    <h3 style="text-align: center;">Valider ma reservation</h3>
+    <form (ngSubmit)="addEmprunt(addEmpruntForm)" #addEmpruntForm="ngForm">
+
+        <div class="form-group">
+            <label for="idRes" class="form-label">ID de reservation</label>
+            <input type="number" disabled id="idRes" class="form-control" [(ngModel)]="saveEmprunt.idRes" name="idRes" >
+        </div>
+
+        <div class="form-group">
+            <label for="dateDebut" class="form-label">Date de debut</label>
+            <input type="date" #dateDebut="ngModel" name="date_debut" id="dateDebut" class="form-control" [(ngModel)]="saveEmprunt.date_debut">
+            <small class="form-text text-danger" >
+                Par défaut, la date de début prendra la date du système si vous ne la changez pas
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="date_retour_prevu" class="form-label">Date de retour prevue</label>
+            <input type="date" #date_retour_prevu="ngModel" name="date_retour_prevu" id="date_retour_prevu" class="form-control"
+                placeholder="Par défaut, vous avez 7 jours pour retourner le document si vous ne changez pas la date de retour prevue"
+                [(ngModel)]="saveEmprunt.date_retour_prevue">
+                <small class="form-text text-danger" >
+                    Par défaut, vous avez 7 jours pour retourner le document si vous ne changez pas la date de retour prévue.
+                </small>
+        </div>
+
+        <button class="btn btn-success" type="submit">Valider</button>
+
+    </form>
+</div>

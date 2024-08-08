@@ -1,0 +1,98 @@
+
+<a routerLink="/documents" class="btn btn-info" > add a new reservation</a>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">idEmprunt</th>
+        <th scope="col">idReservation</th>
+        <th scope="col">date de debut</th>
+        <th scope="col">date de retour prevue</th>
+        <th scope="col">date de retour</th>
+        <th scope="col">status</th>
+        <th scope="col">update</th>
+        <th scope="col">delete</th>
+        <th scope="col">cancel</th>
+        <th scope="col">confirm returning</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emprunt of emprunts">
+        <th >{{emprunt.idEmp}}</th>
+        <td class="column">{{emprunt.idRes}}</td>
+        <td class="column">{{emprunt.date_debut}}</td>
+        <td class="column">{{emprunt.date_retour_prevue}}</td>
+        <td class="column">
+            <span *ngIf="emprunt.date_retour==null" style="font-weight: bold;">UNDEFINED</span>
+            <span *ngIf="emprunt.date_retour">{{emprunt.date_retour}}</span>
+        </td>
+        <td class="column">
+        <span *ngIf="emprunt.status==status.Approuv">
+            <button class="btn btn-success" style="width: 100px;">{{emprunt.status}}</button>
+        </span>
+        <span *ngIf="emprunt.status==status.Retourn">
+            <button class="btn btn-info" style="width: 100px;">{{emprunt.status}}</button>
+        </span>
+        <span *ngIf="emprunt.status==status.Annul">
+            <button class="btn btn-warning" style="width: 100px;">{{emprunt.status}}</button>
+        </span>
+        <span *ngIf="emprunt.status==status.Retard">
+            <button class="btn btn-danger" style="width: 100px;">{{emprunt.status}}</button>
+        </span>
+        </td>
+    
+
+        <td class="column">
+            <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger"  >
+                <i class="bi bi-pencil-square"></i>
+            </button>
+            <button *ngIf="emprunt.status==status.Annul" class="btn btn-outline-danger" disabled >
+              <i class="bi bi-pencil-square"></i>
+          </button>
+          <button *ngIf="emprunt.status==status.Retard" class="btn btn-outline-danger" disabled >
+            <i class="bi bi-pencil-square"></i>
+        </button>
+        <button *ngIf="emprunt.status==status.Retourn" class="btn btn-outline-danger" disabled >
+            <i class="bi bi-pencil-square"></i>
+        </button>
+        </td>
+        <td class="column">
+        <button class="btn btn-outline-danger" >
+            <i class="bi bi-trash"></i>
+        </button>
+    </td>
+
+    <td class="column">
+        <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger"  >
+            <i class="bi bi-x-lg"></i>
+        </button>
+        <button *ngIf="emprunt.status==status.Annul" class="btn btn-outline-danger" disabled >
+          <i class="bi bi-x-lg"></i>
+      </button>
+      <button *ngIf="emprunt.status==status.Retard" class="btn btn-outline-danger" disabled >
+        <i class="bi bi-x-lg"></i>
+    </button>
+    <button *ngIf="emprunt.status==status.Retourn" class="btn btn-outline-danger" disabled >
+        <i class="bi bi-x-lg"></i>
+    </button>
+    </td>
+
+
+    <td class="column" style="text-align: center;">
+        <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger"  >
+            <i class="bi bi-check-circle"></i>
+        </button>
+        <button *ngIf="emprunt.status==status.Annul" class="btn btn-outline-danger" disabled >
+          <i class="bi bi-check-circle"></i>
+      </button>
+      <button *ngIf="emprunt.status==status.Retard" class="btn btn-outline-danger"  >
+        <i class="bi bi-check-circle"></i>
+    </button>
+    <button *ngIf="emprunt.status==status.Retourn" class="btn btn-outline-danger" disabled >
+        <i class="bi bi-check-circle"></i>
+    </button>
+    </td>
+
+      
+    </tbody>
+  </table>

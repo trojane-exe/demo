@@ -21,6 +21,8 @@ import { UpdateDocumentComponent } from './AdminInterface/DOCUMENTS_MANAGEMENT/u
 import { ReservationsComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/reservations/reservations.component';
 import { UpdateReservationComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/update-reservation/update-reservation.component';
 import { AddReservationComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/add-reservation/add-reservation.component';
+import { EmpruntsComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/emprunts/emprunts.component';
+import { ValidateEmpruntComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/validate-emprunt/validate-emprunt.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { AddReservationComponent } from './AdminInterface/RESERVATIONS_MANAGEMEN
     UpdateDocumentComponent,
     ReservationsComponent,
     UpdateReservationComponent,
-    AddReservationComponent
+    AddReservationComponent,
+    EmpruntsComponent,
+    ValidateEmpruntComponent,
   ],
   imports: [
     ReactiveFormsModule,
