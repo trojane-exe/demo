@@ -43,7 +43,7 @@
 </div> -->
 
 
-
+<app-navbar></app-navbar>
 <div class="container col-md-6 offset-mid-3">
     <h3 style="text-align: center;"> My personal infos </h3>
     <form >
@@ -52,7 +52,7 @@
         <div class="form-group">
             <input type="number" name="idUser" id="Iduser" disabled hidden >
             <label style="margin-bottom: 10px"> Nom </label>
-            <input type="text" class="form-control" id="nom"  name="nom" disabled>
+            <input type="text" class="form-control" id="nom"  [(ngModel)]="user.nom" name="nom" disabled>
             
         </div>
 

@@ -16,6 +16,7 @@ public interface IUtilisateurService {
     public void deleteAll();
     public List<Utilisateur> getAllUsers();
     public List<Object> getAllId();
+    public Integer getUserIdFromEmail(String email);
 
 
 }

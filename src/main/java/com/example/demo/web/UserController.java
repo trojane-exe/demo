@@ -75,6 +75,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/getId")
+    public ResponseEntity<?> getIDFromEmail(@RequestParam String email) {
+        try {
+            Integer userId = us.getUserIdFromEmail(email);
+            return ResponseEntity.ok(userId);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found for email: " );
+        }
+    }
+
     @GetMapping("/bookingId")
     public ResponseEntity<List<Object>> getBookingInfo(){
         List<Object> users = us.getAllId();

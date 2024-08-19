@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../models/User.model';
+import { ProfileService } from '../services/UserServices/profile.service';
+import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../services/authenticationService/authentication.service';
+import { GestionUtilisateurService } from '../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
+import { LoginComponent } from '../login/login.component';
+import { SharedIDService } from '../services/sharedService/shared-id.service';
 
 
 @Component({
@@ -10,11 +16,31 @@ import { User } from '../models/User.model';
 })
 export class ProfileComponent implements OnInit{
 
+  userId!:number
   user :User=new User();
+  newUserId!:number 
 
-  constructor(private router : Router){}
+  constructor(private router : Router,private userService : GestionUtilisateurService,private profileService : ProfileService,private toast : ToastrService
+    ,private authentication : AuthenticationService,private sharedService : SharedIDService){}
 
 
+
+  getUser(id : number):void{
+    this.userService.getUserById(id).subscribe({
+      next : (data : User)=>{
+        this.user = data        
+      },
+      error :(err)=>{
+        console.error('error',err);
+      }
+      
+    })
+
+     
+
+
+
+  }
 
   deleteAccount(){
     
@@ -48,13 +74,14 @@ export class ProfileComponent implements OnInit{
   }
 
   ngOnInit():void{
-    // this.user={
-      // id:1,
-      // nom:'elbouazzaoui',
-      // prenom: 'soufiane',
-      // adresse: '123 Main St',
-      // email: 'test@gmail.com',
-      // password:'12345'
+    const userIdFromStorage = localStorage.getItem('userId');
+    if (userIdFromStorage) {
+      this.userId = parseInt(userIdFromStorage, 10);
+      console.log('User ID retrieved in ProfileComponent:', this.userId);
+    } else {
+      console.error('User ID is not available in localStorage.');
+      // Handle the case where userId is not available, e.g., redirect to login
+    }
     }
 
 

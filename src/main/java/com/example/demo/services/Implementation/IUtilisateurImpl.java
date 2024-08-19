@@ -143,6 +143,13 @@ public class IUtilisateurImpl implements IUtilisateurService {
     }
 
     @Override
+    public Integer getUserIdFromEmail(String email){
+        Utilisateur user = ur.findByEmail(email).orElse(null);
+        assert user != null;
+        return user.getIdUser();
+    }
+
+    @Override
     public UtilisateurDTO rechercherUser(Integer id) {
         Optional<Utilisateur> userInfo = ur.findById(id);
         Utilisateur utilisateur = userInfo.get();

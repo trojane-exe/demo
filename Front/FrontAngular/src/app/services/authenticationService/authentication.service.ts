@@ -42,6 +42,21 @@ export class AuthenticationService {
     return !!this.getToken();
   }
   
+  getUserId(): string | null {
+    const token = this.getToken();  
+    if (token) {
+      const decodedToken = this.jwtHelper.decodeToken(token);  
+      console.log('Decoded Token:', decodedToken);  
+      if (decodedToken) {
+        if (decodedToken.id) {
+          return decodedToken.id;  
+        }
+      }
+    }
+    return null;  
+  }
+
+  
   getRole(): string | null {
     const token = this.getToken();  // Retrieve the token from localStorage
     if (token) {
