@@ -7,19 +7,19 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link "  routerLink="/users">Users</a>
+            <a class="nav-link "  routerLink="/users" (click)="isConnected()">Users</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/documents">Documents</a>
+            <a class="nav-link" routerLink="/documents" (click)="isConnected()">Documents</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/reservations">
+            <a class="nav-link" routerLink="/reservations" (click)="isConnected()">
               Reservations
             </a>
 
           </li>
           <li class="nav-item ">
-            <a class="nav-link " routerLink="/emprunts">
+            <a class="nav-link " routerLink="/emprunts" (click)="isConnected()">
               Emprunts
             </a>
           </li>
@@ -28,10 +28,10 @@
               Account
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Sign in</a></li>
-              <li><a class="dropdown-item" href="#">Sign up</a></li>
+              <li><button class="dropdown-item" >Sign in</button></li>
+              <li><button class="dropdown-item" >Sign up</button></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
+              <li><button class="dropdown-item" (click)="logout()">Sign out</button></li>
             </ul>
           </li>
         </ul>

@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
 import{ FormsModule,NgForm} from '@angular/forms';
 import { UsersComponent } from './AdminInterface/USER_MANAGEMENT/users/users.component';
 import { AddUserComponent } from './AdminInterface/USER_MANAGEMENT/add-user/add-user.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +23,8 @@ import { UpdateReservationComponent } from './AdminInterface/RESERVATIONS_MANAGE
 import { AddReservationComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/add-reservation/add-reservation.component';
 import { EmpruntsComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/emprunts/emprunts.component';
 import { ValidateEmpruntComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/validate-emprunt/validate-emprunt.component';
+import { UpdateEmpruntComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/update-emprunt/update-emprunt.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { ValidateEmpruntComponent } from './AdminInterface/RESERVATIONS_MANAGEME
     AddReservationComponent,
     EmpruntsComponent,
     ValidateEmpruntComponent,
+    UpdateEmpruntComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -54,7 +57,9 @@ import { ValidateEmpruntComponent } from './AdminInterface/RESERVATIONS_MANAGEME
     
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide : HTTP_INTERCEPTORS, useClass:AuthInterceptor,multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

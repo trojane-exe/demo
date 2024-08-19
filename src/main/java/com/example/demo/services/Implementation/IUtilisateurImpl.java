@@ -1,5 +1,6 @@
 package com.example.demo.services.Implementation;
 
+import com.example.demo.JwtConfig.JwtService;
 import com.example.demo.dto.UtilisateurDTO;
 import com.example.demo.entities.RoleEnum;
 import com.example.demo.entities.Utilisateur;
@@ -8,9 +9,12 @@ import com.example.demo.services.Interface.IUtilisateurService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +22,14 @@ import java.util.Optional;
 @Service
 @Transactional
 public class IUtilisateurImpl implements IUtilisateurService {
+    private final PasswordEncoder passwordEncoder;
     private final UtilisateurRepository ur;
+    private final JwtService jwtService;
     @Autowired
-    public  IUtilisateurImpl(UtilisateurRepository userRep){
+    public  IUtilisateurImpl(PasswordEncoder passwordEncoder, UtilisateurRepository userRep, JwtService jwtService){
+        this.passwordEncoder = passwordEncoder;
         this.ur = userRep;
+        this.jwtService = jwtService;
     }
 
 
@@ -36,7 +44,7 @@ public class IUtilisateurImpl implements IUtilisateurService {
         user.setPrenom(dto.getPrenom());
         user.setNom(dto.getNom());
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setRole(RoleEnum.valueOf(dto.getRole()));
         user.setAdresse(dto.getAdresse());
         return user;
@@ -79,7 +87,7 @@ public class IUtilisateurImpl implements IUtilisateurService {
     }
 
     @Override
-    public void ajouterUser(UtilisateurDTO userdto){
+    public String ajouterUser(UtilisateurDTO userdto){
         if(userdto.getRole()==null||userdto.getRole().describeConstable().isEmpty()){
             userdto.setRole(RoleEnum.User.toString());
         }
@@ -88,10 +96,15 @@ public class IUtilisateurImpl implements IUtilisateurService {
         }
         Utilisateur utilisateur = toEntity(userdto);
         ur.save(utilisateur);
+        return jwtService.generateToken(null, new org.springframework.security.core.userdetails.User(
+                utilisateur.getEmail(),
+                utilisateur.getPassword(),
+                Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + utilisateur.getRole().name()))
+        ));
     }
 
     @Override
-    public void modifierUser(int id ,Utilisateur utilisateur) {
+    public String modifierUser(int id ,Utilisateur utilisateur) {
         Utilisateur existant = ur.findById(id).orElseThrow(()->new EntityNotFoundException("user not found"));
         if(existant != null) {
             if (utilisateur.getNom() != null) {
@@ -107,13 +120,19 @@ public class IUtilisateurImpl implements IUtilisateurService {
                 existant.setEmail(utilisateur.getEmail());
             }
             if (utilisateur.getPassword() != null) {
-                existant.setPassword(utilisateur.getPassword());
+                existant.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
             }
             if (utilisateur.getRole() != null) {
                 existant.setRole(utilisateur.getRole());
             }
             ur.save(existant);
+            return jwtService.generateToken(null, new org.springframework.security.core.userdetails.User(
+                    utilisateur.getEmail(),
+                    utilisateur.getPassword(),
+                    Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + utilisateur.getRole().name()))
+            ));
         }
+        return null;
 
     }
 

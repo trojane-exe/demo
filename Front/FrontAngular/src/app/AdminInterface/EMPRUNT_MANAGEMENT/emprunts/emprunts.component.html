@@ -1,5 +1,5 @@
 
-<a routerLink="/documents" class="btn btn-info" > add a new reservation</a>
+<a (click)="doEmprunt();" class="btn btn-info" > add a new emprunt</a>
 <table class="table">
     <thead>
       <tr>
@@ -43,7 +43,7 @@
     
 
         <td class="column">
-            <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger"  >
+            <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger" (click)="navigateToUpdate(emprunt.idEmp)" >
                 <i class="bi bi-pencil-square"></i>
             </button>
             <button *ngIf="emprunt.status==status.Annul" class="btn btn-outline-danger" disabled >
@@ -63,7 +63,7 @@
     </td>
 
     <td class="column">
-        <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger" >
+        <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger" (click)="cancelEmprunt(emprunt.idEmp)">
             <i class="bi bi-x-lg"></i>
         </button>
         <button *ngIf="emprunt.status==status.Annul" class="btn btn-outline-danger" disabled >
@@ -79,7 +79,7 @@
 
 
     <td class="column" style="text-align: center;">
-        <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger"  >
+        <button *ngIf="emprunt.status===status.Approuv" class="btn btn-outline-danger" (click)="confirmReturn(emprunt.idEmp)" >
             <i class="bi bi-check-circle"></i>
         </button>
         <button *ngIf="emprunt.status==status.Annul" class="btn btn-outline-danger" disabled >

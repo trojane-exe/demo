@@ -1,0 +1,33 @@
+<div class="container col-md-6 offset-md-3">
+    <h3 style="text-align: center;">Add new document</h3>
+    <form (ngSubmit)="updateemprunt(updateEmpForm)" #updateEmpForm="ngForm" novalidate autocomplete="off">
+
+        <div class="form-group">
+            <label style="margin-bottom: 10px">ID idReservation</label>
+            <input type="text" required #idRes="ngModel" id="idRes" name="idRes"
+            class="form-control" [(ngModel)]="emprunt.idRes" autocomplete="off" disabled>
+
+        </div>
+
+        <div class="form-group">
+            <label for="auteur" class="form-label">Date de debut</label>
+            <input type="date" class="form-control" required #date_debut="ngModel"
+              [(ngModel)]="emprunt.date_debut" name="auteur" autocomplete="off">
+
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="form-label">Date de retour prevue</label>
+            <input type="date" class="form-control" id="date_retour_prevue" [(ngModel)]="emprunt.date_retour_prevue" name="date_retour_prevue" 
+            required #date_retour_prevue="ngModel"  autocomplete="off">
+
+        </div>
+
+
+
+        <div>
+        <button class="btn btn-success"  style="margin-top: 10px;" type="submit">Update</button>
+        <a  routerLink="/documents" class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;">Go back</a>
+    </div>
+    </form>
+</div>

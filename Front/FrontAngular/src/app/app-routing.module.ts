@@ -14,6 +14,7 @@ import { ReservationsComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/
 import { UpdateReservationComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/update-reservation/update-reservation.component';
 import { EmpruntsComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/emprunts/emprunts.component';
 import { ValidateEmpruntComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/validate-emprunt/validate-emprunt.component';
+import { UpdateEmpruntComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/update-emprunt/update-emprunt.component';
 
 
 const routes: Routes = [
@@ -68,6 +69,14 @@ const routes: Routes = [
   {
     path:'add-emprunt/:id',
     component : ValidateEmpruntComponent
+  },
+  {
+    path :'update-emp/:id',
+    component :UpdateEmpruntComponent
+  },
+  {
+    path :'login',
+    component : LoginComponent
   }
 
 ];

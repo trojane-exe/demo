@@ -33,16 +33,16 @@ public class EmpruntController {
 
 
 
-    @PostMapping("/cancel")
-    public ResponseEntity<?> cancel(@Validated @RequestBody EmpruntDTO emprunt){
-        String result = es.annulerEmprunt(emprunt);
-        if(result==null){
-            return ResponseEntity.ok(result);
-        }
-        else{
-            return ResponseEntity.badRequest().body(result);
-        }
-    }
+//    @PostMapping("/cancel/{id}")
+//    public ResponseEntity<?> cancel(@PathVariable("id") Integer id,@Validated @RequestBody EmpruntDTO emprunt){
+//        String result = es.annulerEmprunt(id,emprunt);
+//        if(result==null){
+//            return ResponseEntity.ok(result);
+//        }
+//        else{
+//            return ResponseEntity.badRequest().body(result);
+//        }
+//    }
     @PostMapping("/add_emprunt")
     public ResponseEntity<?> addEmprunt(@Validated @RequestBody EmpruntDTO dto){
         String resultat = es.ajouterEmprunt(dto);

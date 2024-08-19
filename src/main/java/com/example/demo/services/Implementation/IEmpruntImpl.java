@@ -163,17 +163,17 @@ public class IEmpruntImpl implements IEmpruntService {
     }
 
     @Override
-    public String annulerEmprunt(EmpruntDTO dto){
-        Reservation reservation = rr.findById(dto.getIdRes()).orElse(null);
-        if(reservation.getIsActive()) {
-            Emprunt emprunt = toEntity(dto);
-            emprunt.setReservation(emprunt.getReservation());
+    public String annulerEmprunt(int id){
+        Emprunt emprunt = er.findById(id).orElse(null);
+        Reservation reservation = rr.findById(emprunt.getReservation().getIdReservation()).orElse(null);
             emprunt.setDate_debut(LocalDate.now());
             emprunt.setDate_retour_prevue(null);
             emprunt.setDate_retour(null);
             emprunt.setStatus(StatusEnum.annulé);
             er.save(emprunt);
-            reservation.setIsActive(false);
+            Document doc = dr.findById(reservation.getDocument().getIdDoc()).orElse(null);
+            doc.setStock(doc.getStock()+1);
+            dr.save(doc);
             Transaction transaction = new Transaction();
             transaction.setEmprunt(emprunt);
             transaction.setUtilisateur(reservation.getUtilisateur());
@@ -181,10 +181,7 @@ public class IEmpruntImpl implements IEmpruntService {
             tr.save(transaction);
             return "this reservation has been cancelled the transaction is saved ";
         }
-        else{
-            return "an error occured , this reservation is already used";
-        }
-    }
+
 
     @Override
     public List<EmpruntDTO> findEmpruntsByUserId(Integer id) {
@@ -206,16 +203,14 @@ public class IEmpruntImpl implements IEmpruntService {
         Emprunt oldEmprunt = er.findById(id).orElse(null);
         Emprunt emprunt = toEntityUpdate(empruntDTO);
         if(oldEmprunt != null ) {
-            if (oldEmprunt.getStatus() == StatusEnum.annulé || oldEmprunt.getStatus() == StatusEnum.retourné) {
-                return "this emprunt is canceled or returned";
-            } else if (emprunt.getDate_debut().isAfter(emprunt.getDate_retour_prevue())) {
+            if (emprunt.getDate_debut().isAfter(emprunt.getDate_retour_prevue())) {
                     return "date error: date debut is after date de retour prevue";
                 }
-            else if (emprunt.getDate_debut().isBefore(LocalDate.now())) {
-                return "invalid start date";
-            }
+//            else if (emprunt.getDate_debut().isBefore(LocalDate.now())) {
+//                return "invalid start date";
+//            }
             else{
-                oldEmprunt.setDate_debut(emprunt.getDate_debut());
+                //oldEmprunt.setDate_debut(emprunt.getDate_debut());
                 oldEmprunt.setDate_retour_prevue(emprunt.getDate_retour_prevue());
                 er.save(oldEmprunt);
                 return "updated successfully";
@@ -226,24 +221,36 @@ public class IEmpruntImpl implements IEmpruntService {
     }
 
     @Override
-    public String modifierEmpruntAdmin(int id){
-        //pour l'admin , il peut modifer la date de retour et le status de l'emprunt
-        Emprunt oldEmprunt = er.findById(id).orElse(null);
-        if(oldEmprunt != null ) {
-            if (oldEmprunt.getStatus() == StatusEnum.annulé || oldEmprunt.getStatus() == StatusEnum.retourné) {
-                return "this emprunt is canceled or returned";
-            }
-            else{
-                oldEmprunt.setDate_retour(LocalDate.now());
-                oldEmprunt.setStatus(StatusEnum.retourné);
-                er.save(oldEmprunt);
-                return "updated successfully : retourné";
-            }
-
-        }
+    public String confirmerRetour(int id) {
+        Emprunt emprunt = er.findById(id).orElse(null);
+        emprunt.setDate_retour(LocalDate.now());
+        emprunt.setStatus(StatusEnum.retourné);
+        Reservation reservation = rr.findById(emprunt.getReservation().getIdReservation()).orElse(null);
+        Document doc = dr.findById(reservation.getDocument().getIdDoc()).orElse(null);
+        doc.setStock(doc.getStock()+1);
+        dr.save(doc);
         return null;
-
     }
+
+//    @Override
+//    public String modifierEmpruntAdmin(int id){
+//        //pour l'admin , il peut modifer la date de retour et le status de l'emprunt
+//        Emprunt oldEmprunt = er.findById(id).orElse(null);
+//        if(oldEmprunt != null ) {
+//            if (oldEmprunt.getStatus() == StatusEnum.annulé || oldEmprunt.getStatus() == StatusEnum.retourné) {
+//                return "this emprunt is canceled or returned";
+//            }
+//            else{
+//                oldEmprunt.setDate_retour(LocalDate.now());
+//                oldEmprunt.setStatus(StatusEnum.retourné);
+//                er.save(oldEmprunt);
+//                return "updated successfully : retourné";
+//            }
+//
+//        }
+//        return null;
+//
+//    }
 
     @Override
     public String supprimerEmprunt(int id) {
@@ -296,7 +303,7 @@ public class IEmpruntImpl implements IEmpruntService {
         }
     }
 
-    @Scheduled(cron ="0 0 0 * * ?")
+    @Scheduled(cron = "0 0 0/12 * * ?")
     public void scheduledTask() {
         retard();
     }

@@ -8,8 +8,8 @@ import java.util.List;
 public interface IUtilisateurService {
 
     public void addUser(Utilisateur utilisateur);
-    public void ajouterUser(UtilisateurDTO utilisateur);
-    public void modifierUser(int id ,Utilisateur utilisateur);
+    public String ajouterUser(UtilisateurDTO utilisateur);
+    public String modifierUser(int id ,Utilisateur utilisateur);
     public void supprimerUser(Integer id);
     public UtilisateurDTO rechercherUser(Integer id); //rechercher un seul utilisteur
     public List<UtilisateurDTO> listUsers();

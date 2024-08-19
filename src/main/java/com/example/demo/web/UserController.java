@@ -23,6 +23,7 @@ import java.util.Map;
 @Validated
 public class UserController {
     private final IUtilisateurService us;
+
     @Autowired
     public UserController(IUtilisateurService utilisateurService){
         this.us = utilisateurService;
@@ -63,8 +64,11 @@ public class UserController {
     @PostMapping("/add_user")
     public ResponseEntity<?> addUser(@Validated @RequestBody UtilisateurDTO user) {
         try {
-            us.ajouterUser(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body("User added successfully");
+            String token = us.ajouterUser(user);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "User added successfully");
+            response.put("token", token); // Add token to response
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add user: " + e.getMessage());

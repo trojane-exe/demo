@@ -1,39 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
+
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../services/authenticationService/authentication.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
+  errorMessage: string | null = null;
 
-  constructor (private router : Router){}
-  email :string='';
-  password : string ='';
-  userrole : string='';
-  users =[
-    {email:'user1@gmail.com',password:'123',role:'user'},
-    {email:'admin1@gmail.com',password:'123',role:'admin'}
-  ]
-  onlogin(){
-    var email = document.getElementById('emailtxt');
-    var pass = document.getElementById('passtxt');
-    var rolee
-    const foundUser = this.users.find(u => u.email===this.email && u.password===this.password);
-    if(foundUser!=null){
-      this.userrole = foundUser.role;
-      alert("you are an : "+this.userrole)
-      if(this.userrole==='admin'){
-        this.router.navigate(['/users']);
-      }
-      else{
-        this.router.navigate(['/profile']);
-      
-      }
-    }
-
+  constructor(private fb: FormBuilder, private authService: AuthenticationService, private router: Router
+    ,private toast : ToastrService) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
   }
 
-  
+
+
+
+  onLogin(): void {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.authService.login(email, password).subscribe({
+        next: (response) => {
+          this.authService.storeToken(response.token);  
+          this.router.navigate(['/users']);
+          const role = this.authService.getRole();
+
+        },
+        error: (err) => {
+          this.errorMessage = 'Invalid email or password';
+        } 
+      });
+      
+    }
+  }
+
+  ngOnInit(): void {
+  }
 }
+
