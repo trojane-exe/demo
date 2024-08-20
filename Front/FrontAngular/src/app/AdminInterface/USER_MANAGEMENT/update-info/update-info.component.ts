@@ -22,20 +22,7 @@ export class UpdateInfoComponent implements OnInit{
 
 
 
-  // toggleClick() {
-  //   const button = document.getElementById('toggleBtn') as HTMLButtonElement;
-  //   const inputpass = document.getElementById('passwordIdConfirm') as HTMLInputElement;
-    
-    
 
-  //   if (inputpass.type === 'password') {
-  //     inputpass.type = 'text';
-  //     button.textContent = 'Hide';
-  //   } else {
-  //     inputpass.type = 'password';
-  //     button.textContent = 'Show';
-  //   }
-  // }
 
   updateUser(form:NgForm):void{
 

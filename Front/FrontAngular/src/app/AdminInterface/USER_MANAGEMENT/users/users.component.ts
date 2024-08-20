@@ -16,6 +16,7 @@ export class UsersComponent {
 
   
 
+  userId!:number
   users:User[]=[];
   showPasswordMap = new Map<number,boolean>(); // i used this so i can toggle all the passwords in the table to show or hide them
 
@@ -87,6 +88,15 @@ export class UsersComponent {
 
   ngOnInit():void{
     this.loadUsers();
+   
+    const userIdFromStorage = localStorage.getItem('userId');
+    if (userIdFromStorage) {
+      this.userId = parseInt(userIdFromStorage, 10);
+      console.log('User ID retrieved in ProfileComponent:', this.userId);
+    } else {
+      console.error('User ID is not available in localStorage.');
+      // Handle the case where userId is not available, e.g., redirect to login
+    }
     // this.userService.getAllUsers().subscribe({
     //   next : (data)=>{
     //     this.listusers = data;

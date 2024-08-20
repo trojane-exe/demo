@@ -9,3 +9,7 @@ khasni nbedel delete reservation w ndirha tatzid +1 f stock in case deleted
 as a user if I delete an emprunt the row inserted for the transaction will be deleted too, otherwise i wont be
 able to delete the emprunt , so for the user we will give him only the update action only after validation an emprunt
 but i should find a solution to prevent deleting the transaction row,(the emprunt id is in the transaction so its kinda impossible tho)
+
+
+
+for tomorrow khasni nwid wahd methode jdida f reservation w emprunts bach njbedhom ela hsab id dial user , bhc ndirha f interface dial utilisateur 

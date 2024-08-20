@@ -1,0 +1,36 @@
+<app-navbar></app-navbar>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">idDoc</th>
+        <th scope="col">titre</th>
+        <th scope="col">auteur</th>
+        <th scope="col">date d'ecriture</th>
+        <th scope="col">stock</th>
+        <th scope="col">book</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of docs">
+        <th >{{d.idDoc}}</th>
+        <td class="column">{{d.titre}}</td>
+        <td class="column">{{d.auteur}}</td>
+        <td class="column">{{d.date_ecriture}}</td>
+
+        <td class="column">{{d.stock}}</td>
+        <td class="column">
+          <button *ngIf ="d.stock >0" class="btn btn-outline-danger" (click)="bookDoc(d.idDoc)" >
+            <i class="bi bi-calendar"></i>
+
+          </button>
+          <button *ngIf ="d.stock==0" class="btn btn-outline-danger"  disabled>
+            <i class="bi bi-calendar"></i>
+
+          </button>
+        
+    </td>
+      </tr>
+      
+    </tbody>
+  </table>

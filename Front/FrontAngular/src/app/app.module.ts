@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './UserInterface/UserProfile/profile/profile.component';
 import { UpdateInfoComponent } from './AdminInterface/USER_MANAGEMENT/update-info/update-info.component';
 import { LoginComponent } from './login/login.component';
 import{ FormsModule,NgForm} from '@angular/forms';
@@ -25,6 +25,8 @@ import { EmpruntsComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/emprunts/
 import { ValidateEmpruntComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/validate-emprunt/validate-emprunt.component';
 import { UpdateEmpruntComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/update-emprunt/update-emprunt.component';
 import { AuthInterceptor } from './auth.interceptor';
+import { UpdateprofileComponent } from './UserInterface/UserProfile/UpdateProfile/updateprofile/updateprofile.component';
+import { DocumentsUserComponent } from './UserInterface/Documents/documents-user/documents-user.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { AuthInterceptor } from './auth.interceptor';
     EmpruntsComponent,
     ValidateEmpruntComponent,
     UpdateEmpruntComponent,
+    UpdateprofileComponent,
+    DocumentsUserComponent,
   ],
   imports: [
     ReactiveFormsModule,

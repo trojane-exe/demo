@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './UserInterface/UserProfile/profile/profile.component';
 import { UpdateInfoComponent } from './AdminInterface/USER_MANAGEMENT/update-info/update-info.component';
 import { LoginComponent } from './login/login.component';
 import { AppComponent } from './app.component';
@@ -15,6 +15,8 @@ import { UpdateReservationComponent } from './AdminInterface/RESERVATIONS_MANAGE
 import { EmpruntsComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/emprunts/emprunts.component';
 import { ValidateEmpruntComponent } from './AdminInterface/RESERVATIONS_MANAGEMENT/validate-emprunt/validate-emprunt.component';
 import { UpdateEmpruntComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/update-emprunt/update-emprunt.component';
+import { UpdateprofileComponent } from './UserInterface/UserProfile/UpdateProfile/updateprofile/updateprofile.component';
+import { DocumentsUserComponent } from './UserInterface/Documents/documents-user/documents-user.component';
 
 
 const routes: Routes = [
@@ -77,6 +79,14 @@ const routes: Routes = [
   {
     path :'login',
     component : LoginComponent
+  },
+  {
+    path : 'update-profile',
+    component : UpdateprofileComponent
+  },
+  {
+    path : 'document-user',
+    component : DocumentsUserComponent
   }
 
 ];

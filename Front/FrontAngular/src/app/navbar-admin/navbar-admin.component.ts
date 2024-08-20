@@ -22,7 +22,9 @@ export class NavbarAdminComponent {
     }
   }
   logout():void{
+    localStorage.removeItem('userId');
     this.authService.logout();
+
   }
 
 }
