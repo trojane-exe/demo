@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { GestionUtilisateurService } from '../../../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../../../services/authenticationService/authentication.service';
 
 @Component({
   selector: 'app-add-user',
@@ -19,10 +20,9 @@ export class AddUserComponent implements OnInit{
   passwordsMatch = true;
   user: User = new User();
   roles : string[]=['Admin','User'];
-  constructor(private router:Router,private userService : GestionUtilisateurService,private toast : ToastrService){}
-  ngOnInit(): void {
-    
-  }
+  constructor(private router:Router,private userService : GestionUtilisateurService,
+    private toast : ToastrService,private auth :AuthenticationService){}
+
   addUser(form :NgForm) {
 
     const r = (document.getElementById('r') as HTMLInputElement).value;
@@ -56,7 +56,15 @@ export class AddUserComponent implements OnInit{
   }
     }
 }
-  
+
+    ngOnInit(): void {
+      const role = this.auth.getRole();
+      if(role=="User"){
+        this.toast.warning("simple users are not allowed to use the admin dashboard");
+        this.router.navigate(['/profile']);
+      }
+    
+  }
 
 
 }

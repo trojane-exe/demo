@@ -3,6 +3,7 @@ import { Document } from '../../../models/Document.model';
 import { Router } from '@angular/router';
 import { DocumentService } from '../../../services/AdminServices/Documents/document.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../../../services/authenticationService/authentication.service';
 
 @Component({
   selector: 'app-documents',
@@ -12,7 +13,9 @@ import { ToastrService } from 'ngx-toastr';
 export class DocumentsComponent implements OnInit {
 
   docs : Document[]=[];
-  constructor(private router : Router,private documentService : DocumentService,private toast : ToastrService){}
+  constructor(private router : Router,private documentService : DocumentService,private toast : ToastrService,
+    private auth :AuthenticationService
+  ){}
 
 
   navigateToBooking( id : number) : void{
@@ -47,6 +50,13 @@ export class DocumentsComponent implements OnInit {
     })
   }
   ngOnInit(): void {
+    const role = this.auth.getRole();
+    if(role=="User"){
+      this.toast.warning("simple users are not allowed to use the admin dashboard");
+      this.router.navigate(['/profile']);
+    }
+    else{
     this.loadDocs();
   }
+}
 }

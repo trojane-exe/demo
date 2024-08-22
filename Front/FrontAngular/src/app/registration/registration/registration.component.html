@@ -1,0 +1,54 @@
+<div class="container col-md-6 offset-md-3">
+    <h3 style="text-align: center;">Register my account</h3>
+    <form (ngSubmit)="addUser(userForm)" #userForm="ngForm" novalidate autocomplete="off">
+
+        <div class="form-group">
+            <label style="margin-bottom: 10px">Nom</label>
+            <input type="text" required #name="ngModel" id="nomtxt" name="nom" [class.is-invalid]="name.invalid && name.touched" 
+            class="form-control" [(ngModel)]="user.nom" autocomplete="off">
+            <small [class.d-none]="name.valid || name.untouched" class="text-danger">Name is required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="prenom" class="form-label">Prenom</label>
+            <input type="text" class="form-control" required #prenom="ngModel" [class.is-invalid]="prenom.invalid && prenom.touched" 
+            [(ngModel)]="user.prenom" name="prenom" autocomplete="off">
+            <small [class.d-none]="prenom.valid || prenom.untouched" class="text-danger">Prenom is required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="emailtxt" [(ngModel)]="user.email" name="email" 
+            required #email="ngModel" [class.is-invalid]="email.invalid && email.touched"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" autocomplete="off"
+            placeholder="a valid email: text12@email.cp">
+            <small [class.d-none]="email.valid || email.untouched" class="text-danger">Please respect the email format and fill the input</small>
+        </div>
+
+        <div class="form-group">
+            <label for="adress" class="form-label">Adresse</label>
+            <input type="text" class="form-control" id="adress" [(ngModel)]="user.adresse" name="adresse" autocomplete="off">
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="passwordId" [(ngModel)]="user.password" name="password" required #password="ngModel" [class.is-invalid]="password.invalid && password.touched" autocomplete="new-password">
+            <small [class.d-none]="password.valid || password.untouched" class="text-danger">Password is required</small>
+        </div>
+
+        <div class="form-group">
+            <label for="passwordIdConfirm" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="passwordIdConfirm" name="passConfirm" [(ngModel)]="passconfirm" required #confirmfield="ngModel" [class.is-invalid]="confirmfield.invalid && confirmfield.touched "autocomplete="new-password">
+            <small [class.d-none]="confirmfield.valid || confirmfield.untouched" class="text-danger">The Confirm password is required and should match the password</small>
+        </div>
+        <div>
+        <button class="btn btn-success"  style="margin-top: 10px;" type="submit">Save</button>
+        <a  routerLink="/users" class="btn btn-success" type="button" style="margin-top: 10px; margin-left: 10px;">Go back</a>
+    </div>
+    </form>
+    <div *ngIf="errormessage" class="alert alert-danger "  role="alert">
+        {{ errormessage }}
+    </div>
+</div>

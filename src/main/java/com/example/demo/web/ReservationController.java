@@ -1,6 +1,7 @@
 package com.example.demo.web;
 
 import com.example.demo.dto.ReservationDTO;
+import com.example.demo.entities.Reservation;
 import com.example.demo.services.Interface.IReservationService;
 import lombok.Data;
 import org.apache.coyote.Response;
@@ -31,6 +32,12 @@ public class ReservationController {
     public ResponseEntity<List<ReservationDTO>> allReservation(){
         List<ReservationDTO>res = rs.listerReservation();
         return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/user-reservation/{id}")
+    public ResponseEntity<List<ReservationDTO>> UserReservation(@PathVariable ("id") Integer id){
+        List<ReservationDTO> reservations = rs.getReservationsByUserId(id);
+        return ResponseEntity.ok( reservations);
     }
 
     @GetMapping("/{id}")

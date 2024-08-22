@@ -31,6 +31,7 @@ export class DocumentsUserComponent {
         next:()=>{
           this.loadDocs();
           this.toast.success("Reservation booked successfully",'INSERT');
+          this.router.navigate(['/reservation-user'])
         },
         error:(err)=>
           this.toast.error("error"+err)

@@ -43,8 +43,17 @@ public class EmpruntController {
 //            return ResponseEntity.badRequest().body(result);
 //        }
 //    }
+
+    @GetMapping("/emprunt-user/{id}")
+    public ResponseEntity<List<EmpruntDTO>> getEmpruntsByUserId(@PathVariable Integer id) {
+        List<EmpruntDTO> emprunts = es.findEmpruntsByUserId(id);
+        if (emprunts.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(emprunts);
+    }
     @PostMapping("/add_emprunt")
-    public ResponseEntity<?> addEmprunt(@Validated @RequestBody EmpruntDTO dto){
+    public ResponseEntity<String> addEmprunt(@Validated @RequestBody EmpruntDTO dto){
         String resultat = es.ajouterEmprunt(dto);
         if(resultat ==null){
             return ResponseEntity.ok(resultat);

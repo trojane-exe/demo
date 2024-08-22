@@ -8,6 +8,7 @@ import { Router,ActivatedRoute} from '@angular/router';
 import { GestionUtilisateurService } from '../../../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
 import { ReservationService } from '../../../services/AdminServices/Reservations/reservation.service';
 import { Reservation } from '../../../models/Reservation.model';
+import { AuthenticationService } from '../../../services/authenticationService/authentication.service';
 
 @Component({
   selector: 'app-book-document',
@@ -19,7 +20,8 @@ export class BookDocumentComponent implements OnInit{
   id! : number;
   reservation: Reservation = new Reservation();
   constructor(private router : Router,private route:ActivatedRoute,private docService : DocumentService,private toast : ToastrService,
-    private userService : GestionUtilisateurService,private reservationService:ReservationService){}
+    private userService : GestionUtilisateurService,private reservationService:ReservationService
+  ,private auth :AuthenticationService){}
 
   getUsersInfo():void{
     this.userService.getInfoForBooking().subscribe({
@@ -50,8 +52,15 @@ export class BookDocumentComponent implements OnInit{
     }
   }
   ngOnInit(): void {
+
+    const role = this.auth.getRole();
+    if(role=="User"){
+      this.toast.warning("simple users are not allowed to use the admin dashboard");
+      this.router.navigate(['/profile']);
+    }
+    else{
     this.id = this.route.snapshot.params['id'];
     this.getUsersInfo();
   }
-
+  }
 }

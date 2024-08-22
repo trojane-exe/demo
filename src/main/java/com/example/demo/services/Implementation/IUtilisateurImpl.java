@@ -104,9 +104,11 @@ public class IUtilisateurImpl implements IUtilisateurService {
     }
 
     @Override
-    public String modifierUser(int id ,Utilisateur utilisateur) {
-        Utilisateur existant = ur.findById(id).orElseThrow(()->new EntityNotFoundException("user not found"));
-        if(existant != null) {
+    public String modifierUser(int id, Utilisateur utilisateur) {
+        Utilisateur existant = ur.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        if (existant != null) {
             if (utilisateur.getNom() != null) {
                 existant.setNom(utilisateur.getNom());
             }
@@ -119,22 +121,33 @@ public class IUtilisateurImpl implements IUtilisateurService {
             if (utilisateur.getEmail() != null) {
                 existant.setEmail(utilisateur.getEmail());
             }
-            if (utilisateur.getPassword() != null) {
+
+            // Check if the password has been changed
+            if (utilisateur.getPassword() != null && !utilisateur.getPassword().equals(existant.getPassword())) {
+                // Encode the new password if it has been changed
                 existant.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
+            } else {
+                // Keep the existing password if it hasn't been changed
+                existant.setPassword(existant.getPassword());
             }
+
             if (utilisateur.getRole() != null) {
                 existant.setRole(utilisateur.getRole());
             }
+
             ur.save(existant);
+
+            // Generate JWT token with updated details
             return jwtService.generateToken(null, new org.springframework.security.core.userdetails.User(
-                    utilisateur.getEmail(),
-                    utilisateur.getPassword(),
-                    Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + utilisateur.getRole().name()))
+                    existant.getEmail(),
+                    existant.getPassword(),
+                    Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + existant.getRole().name()))
             ));
         }
-        return null;
 
+        return null;
     }
+
 
     @Override
     public void supprimerUser(Integer id) {

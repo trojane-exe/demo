@@ -32,8 +32,11 @@ public class AuthenticationService {
         utilisateur.setAdresse(request.getAdresse());
         utilisateur.setEmail(request.getEmail());
         utilisateur.setPassword(passwordEncoder.encode(request.getPassword()));
-
-        utilisateur.setRole(RoleEnum.valueOf(request.getRole()));
+        if(request.getRole()==null){
+            utilisateur.setRole(RoleEnum.User);
+        }
+        else{
+        utilisateur.setRole(RoleEnum.valueOf(request.getRole()));}
         ur.save(utilisateur);
 
         String jwtToken = jwtService.generateToken(null, new org.springframework.security.core.userdetails.User(

@@ -115,52 +115,69 @@ public class IEmpruntImpl implements IEmpruntService {
 
 
     @Override
-    public String ajouterEmprunt(EmpruntDTO empruntDTO){
+    public String ajouterEmprunt(EmpruntDTO empruntDTO) {
+
         Reservation reservation = rr.findById(empruntDTO.getIdRes()).orElse(null);
 
-        if (reservation!= null && reservation.getIsActive()) {
-            Emprunt emprunt = toEntity(empruntDTO);
+        // Check if reservation exists and is active
+        if (reservation == null || !reservation.getIsActive()) {
+            return "This reservation does not exist or is not active.";
+        }
 
-            emprunt.setStatus(StatusEnum.approuvé);
-            if (emprunt.getDate_debut() != null) {
-                if (emprunt.getDate_debut().isBefore(LocalDate.now())) {
-                    return "invalid start date";
+        Emprunt emprunt = toEntity(empruntDTO);
+        emprunt.setStatus(StatusEnum.approuvé);
+
+        // Check date_debut
+        if (emprunt.getDate_debut() != null) {
+            if (emprunt.getDate_debut().isBefore(LocalDate.now())) {
+                return "Invalid start date.";
+            }
+            else {
+                emprunt.setDate_debut(emprunt.getDate_debut());
+                if (emprunt.getDate_retour_prevue() == null) {
+                    emprunt.setDate_retour_prevue(emprunt.getDate_debut().plusDays(7));
+                } else if (emprunt.getDate_retour_prevue().isBefore(emprunt.getDate_debut())) {
+                    return "Return date cannot be before start date.";
+                }
+                else{
+                    emprunt.setDate_retour_prevue(emprunt.getDate_retour_prevue());
                 }
             }
-            if (empruntDTO.getDate_retour_prevue() == null) {
-                er.save(emprunt);
-                reservation.setIsActive(false);
-                Transaction transaction = new Transaction();
-                transaction.setEmprunt(emprunt);
-                transaction.setUtilisateur(reservation.getUtilisateur());
-                transaction.setDate_transaction(emprunt.getDate_debut());
-                tr.save(transaction);
-                return "the return date isn't specified , by default you have 7 days to return the document \nyour emprunt is added successfully";
-
+        }
+        else {
+            emprunt.setDate_debut(LocalDate.now());
+            if (emprunt.getDate_retour_prevue() == null) {
+                emprunt.setDate_retour_prevue(emprunt.getDate_debut().plusDays(7));
+            } else if (emprunt.getDate_retour_prevue().isBefore(emprunt.getDate_debut())) {
+                return "Return date cannot be before start date.";
             }
-            else if (emprunt.getDate_debut().isAfter(emprunt.getDate_retour_prevue())) {
-                return "the date de debut cant be after the return date";
-            }
-
-            else {
-                emprunt.setDate_retour_prevue(empruntDTO.getDate_retour_prevue());
-                emprunt.setDate_retour(null);
-                emprunt.setReservation(reservation);
-                er.save(emprunt);
-                reservation.setIsActive(false);
-                Transaction transaction = new Transaction();
-                transaction.setEmprunt(emprunt);
-                transaction.setUtilisateur(reservation.getUtilisateur());
-                transaction.setDate_transaction(emprunt.getDate_debut());
-                tr.save(transaction);
-                return "emprunt added successfully";
+            else{
+                emprunt.setDate_retour_prevue(emprunt.getDate_retour_prevue());
             }
         }
-        else{
-            return "this reservation is already used";
-        }
 
+
+
+
+        // Save emprunt
+        emprunt.setDate_retour(null);
+        emprunt.setReservation(reservation);
+        er.save(emprunt);
+
+        // Update reservation status
+        reservation.setIsActive(false);
+        rr.save(reservation);
+
+        // Insert transaction
+        Transaction transaction = new Transaction();
+        transaction.setEmprunt(emprunt);
+        transaction.setUtilisateur(reservation.getUtilisateur());
+        transaction.setDate_transaction(emprunt.getDate_debut());
+        tr.save(transaction);
+
+        return "Emprunt added successfully.";
     }
+
 
     @Override
     public String annulerEmprunt(int id){
@@ -168,7 +185,7 @@ public class IEmpruntImpl implements IEmpruntService {
         Reservation reservation = rr.findById(emprunt.getReservation().getIdReservation()).orElse(null);
             emprunt.setDate_debut(LocalDate.now());
             emprunt.setDate_retour_prevue(null);
-            emprunt.setDate_retour(null);
+            emprunt.setDate_retour(LocalDate.now());
             emprunt.setStatus(StatusEnum.annulé);
             er.save(emprunt);
             Document doc = dr.findById(reservation.getDocument().getIdDoc()).orElse(null);
@@ -302,6 +319,14 @@ public class IEmpruntImpl implements IEmpruntService {
             }
         }
     }
+
+
+    /* this annotation help to automatically execute the methode retard every time we relaunche the app*/
+    @PostConstruct
+    public void onLaunch(){
+        retard();
+    }
+
 
     @Scheduled(cron = "0 0 0/12 * * ?")
     public void scheduledTask() {

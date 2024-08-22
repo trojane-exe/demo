@@ -41,5 +41,8 @@ export class ReservationService {
   getReservationById(id:number):Observable<Reservation[]>{
     return this.http.get<Reservation[]>(`${this.apiUrl}/${id}`);
   }
+  getAllReservationbyUserId(id : number):Observable<Reservation[]>{
+    return this.http.get<Reservation[]>(`${this.apiUrl}/user-reservation/${id}`);
+  }
   
 }

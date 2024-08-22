@@ -27,6 +27,10 @@ import { UpdateEmpruntComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/upda
 import { AuthInterceptor } from './auth.interceptor';
 import { UpdateprofileComponent } from './UserInterface/UserProfile/UpdateProfile/updateprofile/updateprofile.component';
 import { DocumentsUserComponent } from './UserInterface/Documents/documents-user/documents-user.component';
+import { ReservationUserComponent } from './UserInterface/reservation-user/reservation-user/reservation-user.component';
+import { EmpruntsUserComponent } from './UserInterface/emprunts/emprunts-user/emprunts-user/emprunts-user.component';
+import { RegistrationComponent } from './registration/registration/registration.component';
+
 
 @NgModule({
   declarations: [
@@ -50,6 +54,9 @@ import { DocumentsUserComponent } from './UserInterface/Documents/documents-user
     UpdateEmpruntComponent,
     UpdateprofileComponent,
     DocumentsUserComponent,
+    ReservationUserComponent,
+    EmpruntsUserComponent,
+    RegistrationComponent,
   ],
   imports: [
     ReactiveFormsModule,

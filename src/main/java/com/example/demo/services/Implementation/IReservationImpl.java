@@ -210,4 +210,29 @@ public class IReservationImpl implements IReservationService {
         rr.deleteAll();
 
     }
+
+
+
+
+
+
+
+    @Override
+    public List<ReservationDTO> getReservationsByUserId(Integer idUser) {
+        List<Reservation> reservations = rr.findByUserId(idUser);
+        List<ReservationDTO> dtoList = new ArrayList<>();
+
+        for (Reservation reservation : reservations) {
+            ReservationDTO dto = new ReservationDTO();
+            dto.setIdReservation(reservation.getIdReservation());
+            dto.setIdUser(reservation.getUtilisateur().getIdUser());
+            dto.setIdDoc(reservation.getDocument().getIdDoc());
+            dto.setDate_reservation(reservation.getDate_reservation());
+            dto.setIsActive(reservation.getIsActive());
+            dtoList.add(dto);
+        }
+
+        return dtoList;
+    }
+
 }

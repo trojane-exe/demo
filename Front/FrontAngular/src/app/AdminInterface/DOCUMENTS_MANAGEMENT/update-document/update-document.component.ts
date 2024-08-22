@@ -4,6 +4,7 @@ import { Document } from '../../../models/Document.model';
 import { DocumentService } from '../../../services/AdminServices/Documents/document.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms'; 
+import { AuthenticationService } from '../../../services/authenticationService/authentication.service';
 @Component({
   selector: 'app-update-document',
   templateUrl: './update-document.component.html',
@@ -14,7 +15,7 @@ export class UpdateDocumentComponent implements OnInit{
   document : Document = new Document();
   
 
-  constructor(private router : Router,private toast : ToastrService,private route : ActivatedRoute,private docService : DocumentService ){}
+  constructor(private router : Router,private toast : ToastrService,private route : ActivatedRoute,private docService : DocumentService,private auth :AuthenticationService ){}
 
   loadDocInfo(id:number):void{
     this.docService.getDocById(id).subscribe({
@@ -52,8 +53,14 @@ export class UpdateDocumentComponent implements OnInit{
 }
   
   ngOnInit(): void {
+    const role = this.auth.getRole();
+    if(role=="User"){
+      this.toast.warning("simple users are not allowed to use the admin dashboard");
+      this.router.navigate(['/profile']);
+    }
+    else{
     this.id = this.route.snapshot.params['id'];
     this.loadDocInfo(this.id);
-    
+    }
   }
 }

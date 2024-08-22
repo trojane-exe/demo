@@ -2,7 +2,7 @@ import { Component  } from '@angular/core';
 import { LoginComponent } from '../../../login/login.component';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-//import { TestingAPIService } from '../services/newUsers/testing-api.service';
+import { AuthenticationService } from '../../../services/authenticationService/authentication.service';
 import { User } from '../../../models/User.model';
 import { GestionUtilisateurService } from '../../../services/AdminServices/Utilisateurs/gestion-utilisateur.service';
 
@@ -21,7 +21,8 @@ export class UsersComponent {
   showPasswordMap = new Map<number,boolean>(); // i used this so i can toggle all the passwords in the table to show or hide them
 
 
-  constructor (private router : Router,private userService : GestionUtilisateurService , private toast : ToastrService){};
+  constructor (private router : Router,private userService : GestionUtilisateurService , 
+    private toast : ToastrService, private auth : AuthenticationService){};
 
 
 
@@ -87,25 +88,23 @@ export class UsersComponent {
   }
 
   ngOnInit():void{
+    const role = this.auth.getRole();
+    if(role=="User"){
+      this.toast.warning("simple users are not allowed to use the admin dashboard");
+      this.router.navigate(['/profile']);
+    }
+    else{
     this.loadUsers();
-   
+     
     const userIdFromStorage = localStorage.getItem('userId');
     if (userIdFromStorage) {
       this.userId = parseInt(userIdFromStorage, 10);
       console.log('User ID retrieved in ProfileComponent:', this.userId);
     } else {
       console.error('User ID is not available in localStorage.');
-      // Handle the case where userId is not available, e.g., redirect to login
+      
     }
-    // this.userService.getAllUsers().subscribe({
-    //   next : (data)=>{
-    //     this.listusers = data;
-    //   },
-    //   error : (error)=>{
-    //     this.errorMessage = error;
-
-    //   }
-    // });
+  }
 
   }
 

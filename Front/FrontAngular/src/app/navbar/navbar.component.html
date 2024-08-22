@@ -12,35 +12,23 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/document-user">Documents</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Reservations
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/reservation-user">
+              Mes Reservations
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Add Reservation</a></li>
-              <li><a class="dropdown-item" href="#">Update Reservation</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Cancel Reservation</a></li>
-            </ul>
+
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Emprunts
+          <li class="nav-item ">
+            <a class="nav-link " routerLink="/emprunt-user">
+              Mes Emprunts
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Add Emprunt</a></li>
-              <li><a class="dropdown-item" href="#">Update Emprunt</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Cancel Emprunt</a></li>
-            </ul>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Account
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Sign in</a></li>
-              <li><a class="dropdown-item" href="#">Sign up</a></li>
+              
+              <li><a class="dropdown-item" href="#">Historique</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" (click)="logout()">Sign out</a></li>
             </ul>

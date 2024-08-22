@@ -17,6 +17,9 @@ import { ValidateEmpruntComponent } from './AdminInterface/RESERVATIONS_MANAGEME
 import { UpdateEmpruntComponent } from './AdminInterface/EMPRUNT_MANAGEMENT/update-emprunt/update-emprunt.component';
 import { UpdateprofileComponent } from './UserInterface/UserProfile/UpdateProfile/updateprofile/updateprofile.component';
 import { DocumentsUserComponent } from './UserInterface/Documents/documents-user/documents-user.component';
+import { ReservationUserComponent } from './UserInterface/reservation-user/reservation-user/reservation-user.component';
+import { EmpruntsUserComponent } from './UserInterface/emprunts/emprunts-user/emprunts-user/emprunts-user.component';
+import { RegistrationComponent } from './registration/registration/registration.component';
 
 
 const routes: Routes = [
@@ -87,6 +90,18 @@ const routes: Routes = [
   {
     path : 'document-user',
     component : DocumentsUserComponent
+  },
+  {
+    path : 'reservation-user',
+    component : ReservationUserComponent
+  },
+  {
+    path : 'emprunt-user',
+    component : EmpruntsUserComponent
+  },
+  {
+    path : 'registration',
+    component : RegistrationComponent
   }
 
 ];

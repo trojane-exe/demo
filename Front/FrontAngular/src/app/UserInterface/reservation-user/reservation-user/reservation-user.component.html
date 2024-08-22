@@ -1,0 +1,46 @@
+<app-navbar></app-navbar>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">idReservation</th>
+        <th scope="col">idDoc</th>
+        <th scope="col">date de reservation</th>
+        <th scope="col">etat</th>
+        <th scope="col">cancel</th>
+        <th scope="col">emprunt</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reservation of reservations">
+        <th >{{reservation.idReservation}}</th>
+        <td class="column">{{reservation.idDoc}}</td>
+        <td class="column">{{reservation.date_reservation}}</td>
+
+        <td class="column">
+          <button *ngIf="reservation.isActive"
+          type="button" class="btn btn-success" data-bs-toggle="button" >actif</button>
+          <button *ngIf="!reservation.isActive"
+          type="button" class="btn btn-danger" data-bs-toggle="button" >inactif</button>
+        </td>
+
+    <td class="column">
+      <button *ngIf="reservation.isActive" class="btn btn-outline-danger" (click)="cancelReservation(reservation.idReservation)">
+          <i class="bi bi-x-lg"></i>
+      </button>
+      <button *ngIf="!reservation.isActive" disabled class="btn btn-outline-danger" (click)="cancelReservation(reservation.idReservation)">
+        <i class="bi bi-x-lg"></i>
+    </button>
+  </td>
+  <td class="column">
+    <button class="btn btn-outline-danger" *ngIf="reservation.isActive" (click)="navigateToEmprunt(reservation.idReservation)">
+      <i class="bi bi-bookmark-check-fill"></i>
+    </button>
+    <button class="btn btn-outline-danger" *ngIf="!reservation.isActive" disabled (click)="navigateToEmprunt(reservation.idReservation)">
+      <i class="bi bi-bookmark-check-fill"></i>
+    </button>
+</td>
+      </tr>
+      
+    </tbody>
+  </table>

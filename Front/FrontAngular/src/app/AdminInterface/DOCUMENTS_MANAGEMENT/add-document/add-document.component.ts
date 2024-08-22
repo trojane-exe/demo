@@ -1,18 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Document } from '../../../models/Document.model';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import { DocumentService } from '../../../services/AdminServices/Documents/document.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../../../services/authenticationService/authentication.service';
 
 @Component({
   selector: 'app-add-document',
   templateUrl: './add-document.component.html',
   styleUrl: './add-document.component.css'
 })
-export class AddDocumentComponent {
+export class AddDocumentComponent implements OnInit{
 
-  constructor (private router : Router,private docService : DocumentService,private toast : ToastrService){}
+  constructor (private router : Router,private docService : DocumentService,private toast : ToastrService
+    ,private auth :AuthenticationService
+  ){}
+
   document : Document = new Document();
 
   addDoc(form : NgForm):void{
@@ -36,5 +40,15 @@ export class AddDocumentComponent {
       })
     }
   }
-}
+
+
+}  
+
+ngOnInit(): void {
+  const role = this.auth.getRole();
+  if(role=="User"){
+    this.toast.warning("simple users are not allowed to use the admin dashboard");
+    this.router.navigate(['/profile']);
+  }
+  }
 }

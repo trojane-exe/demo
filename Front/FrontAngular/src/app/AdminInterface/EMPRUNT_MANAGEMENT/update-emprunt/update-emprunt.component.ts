@@ -4,6 +4,7 @@ import { Emprunt } from '../../../models/Emprunt.model';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
 import { EmpruntService } from '../../../services/AdminServices/Emprunts/emprunt.service';
+import { AuthenticationService } from '../../../services/authenticationService/authentication.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class UpdateEmpruntComponent implements OnInit{
   emprunt : Emprunt = new Emprunt();
   date_debut! :Date ;
   date_retour_prevue!:Date
-  constructor(private router : Router,private toast : ToastrService,private route : ActivatedRoute,private empruntService : EmpruntService){}
+  constructor(private router : Router,private toast : ToastrService,private route : ActivatedRoute,
+    private empruntService : EmpruntService,private auth :AuthenticationService){}
 
   getEmpruntInfos(id:number):void{
     this.empruntService.getEmpruntById(id).subscribe({
@@ -55,8 +57,14 @@ export class UpdateEmpruntComponent implements OnInit{
 
 
   ngOnInit(): void {
+    const role = this.auth.getRole();
+    if(role=="User"){
+      this.toast.warning("simple users are not allowed to use the admin dashboard");
+      this.router.navigate(['/profile']);
+    }
+    else{
     this.id = this.route.snapshot.params['id'];
     this.getEmpruntInfos(this.id);
-    
+    }
   }
 }

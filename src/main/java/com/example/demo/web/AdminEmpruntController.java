@@ -7,6 +7,7 @@ import lombok.Data;
 import org.hibernate.persister.collection.mutation.RemoveCoordinatorTablePerSubclass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.config.RepositoryConfigurationSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -34,14 +35,19 @@ public class AdminEmpruntController {
     }
 
     @PostMapping("/add_emprunt")
-    public ResponseEntity<?> addEmprunt(@Validated @RequestBody EmpruntDTO dto){
-        String resultat = es.ajouterEmprunt(dto);
-        if(resultat ==null){
-            return ResponseEntity.ok(resultat);
+    public ResponseEntity<?> addEmprunt( @RequestBody EmpruntDTO dto){
+
+        try {
+            String resultat = es.ajouterEmprunt(dto);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "emprunt saved successfully");
+            response.put("result",resultat);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         }
-        else{
-            return ResponseEntity.badRequest().body(resultat);
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to emprunt: " + e.getMessage());
         }
+
     }
 
     @GetMapping("/{id}")

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EmpruntService } from '../../../services/AdminServices/Emprunts/emprunt.service';
 import { StatusEnum } from '../../../models/StatusEnum.enum';
-import { NotExpr } from '@angular/compiler';
+import { AuthenticationService } from '../../../services/authenticationService/authentication.service';
 @Component({
   selector: 'app-emprunts',
   templateUrl: './emprunts.component.html',
@@ -15,7 +15,7 @@ export class EmpruntsComponent implements OnInit{
   emprunts :Emprunt[]=[];
   status = StatusEnum;
 
-  constructor(private router  : Router, private toast : ToastrService, private empruntService : EmpruntService){}
+  constructor(private router  : Router, private toast : ToastrService, private empruntService : EmpruntService,private auth :AuthenticationService){}
 
   getAllEmprunt():void{
     this.empruntService.getAllEmprunt().subscribe({
@@ -65,8 +65,14 @@ confirmReturn(id:number):void{
 }
 
   ngOnInit(): void {
+    const role = this.auth.getRole();
+    if(role=="User"){
+      this.toast.warning("simple users are not allowed to use the admin dashboard");
+      this.router.navigate(['/profile']);
+    }
+    else{
     this.getAllEmprunt();
-    
+    }
   }
 
 }
