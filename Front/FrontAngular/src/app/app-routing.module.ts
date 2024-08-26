@@ -20,6 +20,7 @@ import { DocumentsUserComponent } from './UserInterface/Documents/documents-user
 import { ReservationUserComponent } from './UserInterface/reservation-user/reservation-user/reservation-user.component';
 import { EmpruntsUserComponent } from './UserInterface/emprunts/emprunts-user/emprunts-user/emprunts-user.component';
 import { RegistrationComponent } from './registration/registration/registration.component';
+import { HistoriqueComponent } from './UserInterface/historique/historique/historique.component';
 
 
 const routes: Routes = [
@@ -102,6 +103,10 @@ const routes: Routes = [
   {
     path : 'registration',
     component : RegistrationComponent
+  },
+  {
+    path: 'historique',
+    component : HistoriqueComponent
   }
 
 ];

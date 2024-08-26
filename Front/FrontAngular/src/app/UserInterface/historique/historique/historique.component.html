@@ -1,0 +1,25 @@
+<app-navbar></app-navbar>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">IdTransaction</th>
+        <th scope="col">IdUtilisateur</th>
+        <th scope="col">IdEmprunt</th>
+        <th scope="col">date de transaction</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of transaction">
+        <th >{{t.idTransaction}}</th>
+        <td class="column">{{t.idUser}}</td>
+        <td class="column">{{t.idEmp}}</td>
+        <td class="column">{{t.date_transaction}}</td>
+
+
+
+    
+      </tr>
+      
+    </tbody>
+  </table>

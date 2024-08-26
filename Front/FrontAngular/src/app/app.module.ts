@@ -30,6 +30,7 @@ import { DocumentsUserComponent } from './UserInterface/Documents/documents-user
 import { ReservationUserComponent } from './UserInterface/reservation-user/reservation-user/reservation-user.component';
 import { EmpruntsUserComponent } from './UserInterface/emprunts/emprunts-user/emprunts-user/emprunts-user.component';
 import { RegistrationComponent } from './registration/registration/registration.component';
+import { HistoriqueComponent } from './UserInterface/historique/historique/historique.component';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { RegistrationComponent } from './registration/registration/registration.
     ReservationUserComponent,
     EmpruntsUserComponent,
     RegistrationComponent,
+    HistoriqueComponent,
   ],
   imports: [
     ReactiveFormsModule,
